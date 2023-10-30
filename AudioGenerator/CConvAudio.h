@@ -11,6 +11,7 @@ namespace ipgdlib
 {
 	namespace audio
 	{
+
 		template <eSampleFormatKind sfk,eFloatingPointKind fpk, eWrapParam wp = ewpPointer>
 		struct CConvAudio :
 			public CAbsStreamProducerT<typename sample_format_trait<sfk>::type>

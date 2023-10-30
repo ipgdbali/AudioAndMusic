@@ -26,22 +26,25 @@ using							SAMPLE_FORMAT_TYPE = typename sample_format_trait<SAMPLE_FORMAT_KIND
 
 int main(int argc, char* argv[])
 {
-	CDuplicator<std::pair<FLOATING_POINT_TYPE,bool>> genFreq(2,
-		new CGenFPFrequency<FLOATING_POINT_KIND>(SAMPLE_RATE,
-			new CGenConstant<FLOATING_POINT_TYPE>(440)
+	auto pFreq = 
+	new CGenFPFrequency<FLOATING_POINT_KIND>(SAMPLE_RATE,
+		new CModOffset<FLOATING_POINT_TYPE>(440,
+			new CModMul<FLOATING_POINT_TYPE>(20,
+				new CGenLinear<FLOATING_POINT_KIND>(
+					new CGenFPFrequency<FLOATING_POINT_KIND>(SAMPLE_RATE,
+						new CGenConstant<FLOATING_POINT_TYPE>(1)
+					)
+				)
+			)
 		)
 	);
 
-	CConvAudio<SAMPLE_FORMAT_KIND, FLOATING_POINT_KIND> signal({
-		new CFuncSerialize<FLOATING_POINT_TYPE>({
-			new CGenSine<FLOATING_POINT_KIND>({ &genFreq,false }),
-			new CGenPWM<FLOATING_POINT_KIND>({ &genFreq,false },new CGenConstant<FLOATING_POINT_TYPE>(0.3)),
-		})
-	});
+	// std::pair return error
+	for(size_t li = 0; li < 48000;li++)
+		std::cout << li << '\t' << pFreq->get().first << '\t' << pFreq->get().second << std::endl;
 
-	auto pFileOut = new CWaveFileWriter<SAMPLE_FORMAT_KIND>("output.wav", SAMPLE_RATE_KIND, 2);
-	audioAgregateMillis<SAMPLE_FORMAT_TYPE>({ pFileOut }, { &signal ,false }, 1000);
-	delete pFileOut;
+
+
 
 	return 0;
 }

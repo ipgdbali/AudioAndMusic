@@ -12,13 +12,13 @@ namespace ipgdlib
     namespace stream
     {
 
-        template <eFloatingPointKind kind,eWrapParam wp = ewpPointer>
+        template <eFloatingPointKind fpk,eWrapParam wp = ewpPointer>
         struct CGenFPFrequency :
-            public CAbsStreamProducerT<std::pair<TFPKind<kind>,bool>>
+            public CAbsStreamProducerT<std::pair<TFPKind<fpk>,bool>>
         {
-            using float_type    = typename TFPKind<kind>;
+            using float_type    = typename TFPKind<fpk>;
             using param_type    = typename wrap_param<IStreamProducerT<float_type>, wp>;
-            using ret_type      = std::pair<TFPKind<kind>, bool>;
+            using ret_type      = std::pair<TFPKind<fpk>, bool>;
 
             ~CGenFPFrequency()
             {
@@ -27,7 +27,7 @@ namespace ipgdlib
             }
 
             CGenFPFrequency(size_t sampleRate,param_type::type freq) :
-                m_Phase(0),m_Source(param_type::transfer(freq)),m_SampleRate(sampleRate)
+                m_Phase(0),m_Source(param_type::transfer(freq)),m_SampleRate(sampleRate),m_bNewPhase(true)
             {
             }
 
@@ -45,13 +45,8 @@ namespace ipgdlib
 
             ret_type get() noexcept final 
             {
-                static ret_type ret;
-
-                ret = { this->m_Phase,this->m_bNewPhase };
-
-                if (this->m_bNewPhase)
-                    this->m_bNewPhase = false;
-                auto freq = param_type::dereference(this->m_Source).get();
+                static float_type float_ret;
+                static bool bool_ret;
 #ifdef _DEBUG
                 /*
                 std::cout << typeid(*this->m_Source).hash_code();
@@ -60,14 +55,28 @@ namespace ipgdlib
                 size_t hash_code = typeid(*this->m_Source).hash_code();
 #endif // DEBUG
 
-                this->m_Phase += freq / this->m_SampleRate;
+                if (hash_code == 15944178417816464911)
+                {
+                    static size_t sample_id = 0;
+                    //std::cout << sample_id << '\t' << freq << '\t' << this->m_Phase << '\t' << this->m_bNewPhase << std::endl;
+                    sample_id++;
+                }
 
+                //ret = std::make_pair(this->m_Phase, this->m_bNewPhase);
+                float_ret = this->m_Phase;
+                bool_ret = this->m_bNewPhase;
+
+                auto freq = param_type::dereference(this->m_Source).get();
+
+                this->m_Phase += (freq / this->m_SampleRate);
+                if (this->m_bNewPhase)
+                    this->m_bNewPhase = false;
                 if (this->m_Phase >= 1.0)
                 {
                     this->m_Phase = this->m_Phase - (int)this->m_Phase;
                     this->m_bNewPhase = true;
                 }
-                return ret;
+                return { float_ret,bool_ret };
             }
 
         private:

@@ -11,6 +11,41 @@ namespace ipgdlib
         #define M_PI 3.14159265358979323846
         #define M_PI2 (2 * M_PI)
 
+        template <eFloatingPointKind fpk, eWrapParam wp = ewpPointer>
+        struct CGenLinear :
+            public CAbsStreamProducerT<TFPKind<fpk>>
+        {
+            using float_type = TFPKind<fpk>;
+            using param_type = wrap_param<IStreamProducerT< std::pair<float_type, bool> >, wp>;
+            using ret_type = float_type;
+
+            ~CGenLinear()
+            {
+                if constexpr (wp == ewpPointer)
+                    this->m_Source.execute();
+            }
+
+            CGenLinear(param_type::type genFrequency) :
+                m_Source(param_type::transfer(genFrequency))
+            {
+            }
+
+            void reset() noexcept final
+            {
+                param_type::dereference(this->m_Source).reset();
+            }
+
+            ret_type get() noexcept final
+            {
+                return param_type::dereference(this->m_Source).get().first;
+            }
+
+        private:
+            param_type::type m_Source;
+
+        };
+
+
         template <eFloatingPointKind fpk,eWrapParam wp = ewpPointer>
         struct CGenSine :
             public CAbsStreamProducerT<TFPKind<fpk>>
@@ -137,6 +172,8 @@ namespace ipgdlib
             param_type::type m_DutyCycle;
 
         };
+
+
     }
 }
 

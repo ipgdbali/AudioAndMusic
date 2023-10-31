@@ -129,14 +129,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="audio.h" />
+    <ClInclude Include="CAbsStreamProducerFiniteT.h" />
     <ClInclude Include="CAbsStreamProducerT.h" />
-    <ClInclude Include="CConvAudio.h" />
+    <ClInclude Include="CFuncConvAudio.h" />
     <ClInclude Include="CGenFunc.h" />
-    <ClInclude Include="CDuplicator.h" />
+    <ClInclude Include="CFuncFork.h" />
     <ClInclude Include="CModFunc.h" />
-    <ClInclude Include="CFuncSerialize.h" />
+    <ClInclude Include="CFuncSerializer.h" />
     <ClInclude Include="CGenConstant.h" />
     <ClInclude Include="CGenFrequency.h" />
+    <ClInclude Include="IStreamProducerFinite.h" />
+    <ClInclude Include="IStreamProducerFiniteT.h" />
     <ClInclude Include="pointer_deleter.h" />
     <ClInclude Include="eFloatingPointKind.h" />
     <ClInclude Include="IStream.h" />

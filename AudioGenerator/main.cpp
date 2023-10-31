@@ -4,10 +4,10 @@
 #include "CGenConstant.h"
 #include "CGenFrequency.h"
 #include "CGenFunc.h"
-#include "CDuplicator.h"
+#include "CFuncFork.h"
 #include "CModFunc.h"
-#include "CFuncSerialize.h"
-#include "CConvAudio.h"
+#include "CFuncSerializer.h"
+#include "CFuncConvAudio.h"
 
 #include "eFloatingPointKind.h"
 #include "audio.h"
@@ -26,25 +26,29 @@ using							SAMPLE_FORMAT_TYPE = typename sample_format_trait<SAMPLE_FORMAT_KIND
 
 int main(int argc, char* argv[])
 {
-	auto pFreq = 
-	new CGenFPFrequency<FLOATING_POINT_KIND>(SAMPLE_RATE,
-		new CModOffset<FLOATING_POINT_TYPE>(440,
-			new CModMul<FLOATING_POINT_TYPE>(20,
-				new CGenLinear<FLOATING_POINT_KIND>(
-					new CGenFPFrequency<FLOATING_POINT_KIND>(SAMPLE_RATE,
-						new CGenConstant<FLOATING_POINT_TYPE>(1)
+	CFuncFork<std::pair<FLOATING_POINT_TYPE,bool>> genFreq(2,
+		new CGenFPFrequency<FLOATING_POINT_KIND>(SAMPLE_RATE,
+			new CModOffset<FLOATING_POINT_TYPE>(440,
+				new CModMul<FLOATING_POINT_TYPE>(50,
+					new CGenSine<FLOATING_POINT_KIND>(
+						new CGenFPFrequency<FLOATING_POINT_KIND>(SAMPLE_RATE,
+							new CGenConstant<FLOATING_POINT_TYPE>(15)
+						)
 					)
 				)
 			)
 		)
 	);
 
-	// std::pair return error
-	for(size_t li = 0; li < 48000;li++)
-		std::cout << li << '\t' << pFreq->get().first << '\t' << pFreq->get().second << std::endl;
+	CFuncConvAudio<SAMPLE_FORMAT_KIND, FLOATING_POINT_KIND> signal({
+		new CFuncSerializer<FLOATING_POINT_TYPE>({
+			new CGenSine<FLOATING_POINT_KIND>({ &genFreq,false }),
+			new CGenPWM<FLOATING_POINT_KIND>({ &genFreq,false }, new CGenConstant<FLOATING_POINT_TYPE>(0.5))
+		})
+	});
 
-
-
-
+	auto pFileOut = new CWaveFileWriter<SAMPLE_FORMAT_KIND>("output.wav", SAMPLE_RATE_KIND, 2);
+	audioAgregateMillis<SAMPLE_FORMAT_TYPE>({ pFileOut }, { &signal ,false }, 10000);
+	delete pFileOut;
 	return 0;
 }

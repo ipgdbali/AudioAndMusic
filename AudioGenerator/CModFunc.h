@@ -9,18 +9,18 @@ namespace ipgdlib
     namespace stream
     {
         template <typename T, eWrapParam wp = ewpPointer>
-        struct CModInverse :
+        struct CModNegate :
             public CAbsStreamProducerT<T>
         {
             using param_type = typename wrap_param<IStreamProducerT<T>, wp>;
 
-            ~CModInverse()
+            ~CModNegate()
             {
                 if constexpr (wp == ewpPointer)
                     this->m_Source.execute();
             }
 
-            CModInverse(typename param_type::type source) :
+            CModNegate(typename param_type::type source) :
                 m_Source(param_type::transfer(source))
             {
             }
@@ -63,7 +63,7 @@ namespace ipgdlib
 
             T get() noexcept final
             {
-                return param_type::dereference(this->m_Source).get() + this->m_Offset;
+                return  this->m_Offset + param_type::dereference(this->m_Source).get();
             }
 
         private:
@@ -95,7 +95,7 @@ namespace ipgdlib
 
             T get() noexcept final
             {
-                return param_type::dereference(this->m_Source).get() * this->m_Mul;
+                return this->m_Mul * param_type::dereference(this->m_Source).get();
             }
 
         private:

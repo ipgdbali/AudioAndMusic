@@ -6,3 +6,5 @@
 	Then on delete use another method to delete it. 
 2023-10-30
 Adds std::vector in CAbsStreamProducer to delete all instance of eWrapParam
+
+static variable pada virtual noexcept final std::pair

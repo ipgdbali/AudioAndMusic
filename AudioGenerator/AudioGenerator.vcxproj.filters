@@ -54,7 +54,7 @@
     <ClInclude Include="CGenConstant.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CDuplicator.h">
+    <ClInclude Include="CFuncFork.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CGenFunc.h">
@@ -63,13 +63,22 @@
     <ClInclude Include="CModFunc.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CFuncSerialize.h">
+    <ClInclude Include="CFuncSerializer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="audio.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CConvAudio.h">
+    <ClInclude Include="CFuncConvAudio.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IStreamProducerFinite.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IStreamProducerFiniteT.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CAbsStreamProducerFiniteT.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

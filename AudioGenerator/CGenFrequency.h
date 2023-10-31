@@ -45,8 +45,8 @@ namespace ipgdlib
 
             ret_type get() noexcept final 
             {
-                static float_type float_ret;
-                static bool bool_ret;
+                ret_type ret(this->m_Phase, this->m_bNewPhase);
+
 #ifdef _DEBUG
                 /*
                 std::cout << typeid(*this->m_Source).hash_code();
@@ -62,10 +62,6 @@ namespace ipgdlib
                     sample_id++;
                 }
 
-                //ret = std::make_pair(this->m_Phase, this->m_bNewPhase);
-                float_ret = this->m_Phase;
-                bool_ret = this->m_bNewPhase;
-
                 auto freq = param_type::dereference(this->m_Source).get();
 
                 this->m_Phase += (freq / this->m_SampleRate);
@@ -76,7 +72,8 @@ namespace ipgdlib
                     this->m_Phase = this->m_Phase - (int)this->m_Phase;
                     this->m_bNewPhase = true;
                 }
-                return { float_ret,bool_ret };
+
+                return ret;
             }
 
         private:

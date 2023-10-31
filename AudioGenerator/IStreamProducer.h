@@ -6,6 +6,7 @@ namespace ipgdlib
 {
 	namespace stream
 	{
+		class IStreamConsumer;
 
 		struct IStreamProducer :
 			public IStream
@@ -14,6 +15,9 @@ namespace ipgdlib
 			{
 				return eskProducer;
 			}
+
+			virtual size_t getInputStreamCount() const noexcept = 0;
+			virtual IStreamProducer getInputStream(size_t index)
 		};
 
 	}

@@ -1,15 +1,15 @@
 #pragma once
 
-#include "CAbsStreamProducerT.h"
+#include "CAbsProcessorNoInputT.h"
 
 namespace ipgdlib
 {
-	namespace stream
+	namespace processor
 	{
 
 		template <typename T>
 		struct CGenConstant :
-			public CAbsStreamProducerT<T>
+			public CAbsProcessorNoInputT<T>
 		{
 			CGenConstant(T constant) :
 				m_Constant(constant)
@@ -23,6 +23,16 @@ namespace ipgdlib
 			T get() noexcept final
 			{
 				return m_Constant;
+			}
+
+			void setConstant(T val) noexcept
+			{
+				this->m_Constant = val;
+			}
+
+			T getConstant() const noexcept
+			{
+				return this->m_Constant;
 			}
 
 		private:

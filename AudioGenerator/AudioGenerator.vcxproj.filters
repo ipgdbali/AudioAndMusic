@@ -21,31 +21,7 @@
     <ClInclude Include="eFloatingPointKind.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="IStream.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="IStreamConsumer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="IStreamProducer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="IStreamProducerT.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="IStreamConsumerT.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CGenFrequency.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CAbsStreamProducerT.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="wrap_ret.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="wrap_param.h">
+    <ClInclude Include="IProcessor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="pointer_deleter.h">
@@ -54,31 +30,34 @@
     <ClInclude Include="CGenConstant.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CFuncFork.h">
+    <ClInclude Include="CAbsProcessorNoInputT.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CGenFunc.h">
+    <ClInclude Include="IProcessorT.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CModFunc.h">
+    <ClInclude Include="CAbsProcessorT.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CFuncSerializer.h">
+    <ClInclude Include="COpNegate.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="audio.h">
+    <ClInclude Include="COpAdd.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CFuncConvAudio.h">
+    <ClInclude Include="COpMul.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="IStreamProducerFinite.h">
+    <ClInclude Include="CAbsOpBinaryT.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="IStreamProducerFiniteT.h">
+    <ClInclude Include="CAbsOpUnaryT.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CAbsStreamProducerFiniteT.h">
+    <ClInclude Include="COpBinary.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="COpUnary.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

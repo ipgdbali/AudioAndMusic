@@ -6,7 +6,6 @@
 namespace ipgdlib
 {
 	enum eWrapParam { 
-		ewpLeftReference, 
 		ewpPointer
 	};
 

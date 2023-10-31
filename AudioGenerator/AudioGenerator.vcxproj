@@ -128,28 +128,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="audio.h" />
-    <ClInclude Include="CAbsStreamProducerFiniteT.h" />
-    <ClInclude Include="CAbsStreamProducerT.h" />
-    <ClInclude Include="CFuncConvAudio.h" />
-    <ClInclude Include="CGenFunc.h" />
-    <ClInclude Include="CFuncFork.h" />
-    <ClInclude Include="CModFunc.h" />
-    <ClInclude Include="CFuncSerializer.h" />
+    <ClInclude Include="CAbsOpBinaryT.h" />
+    <ClInclude Include="CAbsOpUnaryT.h" />
+    <ClInclude Include="CAbsProcessorNoInputT.h" />
+    <ClInclude Include="CAbsProcessorT.h" />
     <ClInclude Include="CGenConstant.h" />
-    <ClInclude Include="CGenFrequency.h" />
-    <ClInclude Include="IStreamProducerFinite.h" />
-    <ClInclude Include="IStreamProducerFiniteT.h" />
+    <ClInclude Include="COpAdd.h" />
+    <ClInclude Include="COpBinary.h" />
+    <ClInclude Include="COpMul.h" />
+    <ClInclude Include="COpNegate.h" />
+    <ClInclude Include="COpUnary.h" />
+    <ClInclude Include="IProcessorT.h" />
     <ClInclude Include="pointer_deleter.h" />
     <ClInclude Include="eFloatingPointKind.h" />
-    <ClInclude Include="IStream.h" />
-    <ClInclude Include="IStreamConsumer.h" />
-    <ClInclude Include="IStreamConsumerT.h" />
-    <ClInclude Include="IStreamProducer.h" />
-    <ClInclude Include="IStreamProducerT.h" />
+    <ClInclude Include="IProcessor.h" />
     <ClInclude Include="type_kind.h" />
-    <ClInclude Include="wrap_param.h" />
-    <ClInclude Include="wrap_ret.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />

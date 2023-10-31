@@ -6,7 +6,7 @@
 
 namespace ipgdlib
 {
-    enum eTypeKind {
+    enum eTypeKind : uint8_t {
         etkInt8,
         etkUInt8,
         etkInt16,
@@ -22,14 +22,14 @@ namespace ipgdlib
     };
 
     template <typename T>
-    struct type_kind
+    struct type_kind_trait
     {
-        static constexpr size_t getTypeSize() noexcept
+        static constexpr size_t typeSize() noexcept
         {
             return sizeof(T);
         }
 
-        static constexpr eTypeKind getTypeKind() noexcept
+        static constexpr eTypeKind typeKind() noexcept
         {
             if constexpr (std::is_same<T, int8_t>::value)
                 return etkInt8;
@@ -71,7 +71,7 @@ namespace ipgdlib
     struct ITypeKind
     {
         virtual size_t getTypeSize() const noexcept = 0;
-        virtual constexpr eTypeKind getTypeKind() const noexcept = 0;
+        virtual eTypeKind getTypeKind() const noexcept = 0;
     };
 
     template <typename T>
@@ -100,7 +100,7 @@ namespace ipgdlib
     struct CTypeKind<int8_t> :
         public CAbsTypeKind<int8_t>
     {
-        constexpr eTypeKind getTypeKind() const noexcept override
+        constexpr eTypeKind getTypeKind() const noexcept final
         {
             return etkInt8;
         }

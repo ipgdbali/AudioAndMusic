@@ -1,7 +1,7 @@
 #pragma once
 
 #include "IStreamConsumer.h"
-#include "IStreamProducerT.h"
+#include "wrap_param.h"
 
 namespace ipgdlib
 {
@@ -11,7 +11,7 @@ namespace ipgdlib
 		struct IStreamConsumerT :
 			public IStreamConsumer
 		{
-			virtual IStreamProducerT<T>* getStreamProducer() const noexcept = 0;
+			virtual IStreamProducerT<T>* getInput(size_t index) const = 0;
 		};
 
 	}

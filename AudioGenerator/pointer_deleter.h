@@ -40,6 +40,17 @@ namespace ipgdlib
 		{
 		}
 
+		pointer_deleter(T& ptr) :
+			m_Pointer(&ptr), m_bDeleted(false)
+		{
+		}
+
+		template <typename U>
+		pointer_deleter<U> as()
+		{
+			return { dynamic_cast<U*>(this->m_Pointer),this->m_bDeleted };
+		}
+
 		T* operator->()
 		{
 			return this->m_Pointer;
@@ -48,6 +59,16 @@ namespace ipgdlib
 		T &operator *() const
 		{
 			return *this->m_Pointer;
+		}
+
+		operator T* () const
+		{
+			return this->m_Pointer;
+		}
+
+		operator bool()
+		{
+			return this->m_Pointer != nullptr;
 		}
 
 	private:

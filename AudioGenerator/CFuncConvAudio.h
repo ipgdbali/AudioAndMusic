@@ -21,12 +21,6 @@ namespace ipgdlib
 			using ret_type = typename sample_format_trait<sfk>::type;
 			using param_type = typename wrap_param<IStreamProducerT<float_type>, wp>;
 			
-			~CFuncConvAudio()
-			{
-				if constexpr (wp == ewpPointer)
-					this->m_Source.execute();
-			}
-
 			CFuncConvAudio(typename param_type::type source) :
 				m_Source(source)
 			{

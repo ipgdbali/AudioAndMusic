@@ -3,8 +3,6 @@
 #include <utility>
 #include "CAbsStreamProducerT.h"
 #include "eFloatingPointKind.h"
-#include "wrap_param.h"
-
 
 namespace ipgdlib
 {
@@ -12,19 +10,13 @@ namespace ipgdlib
     namespace stream
     {
 
-        template <eFloatingPointKind fpk,eWrapParam wp = ewpPointer>
+        template <eFloatingPointKind fpk>
         struct CGenFPFrequency :
             public CAbsStreamProducerT<std::pair<TFPKind<fpk>,bool>>
         {
             using float_type    = typename TFPKind<fpk>;
             using param_type    = typename wrap_param<IStreamProducerT<float_type>, wp>;
             using ret_type      = std::pair<TFPKind<fpk>, bool>;
-
-            ~CGenFPFrequency()
-            {
-                if constexpr (wp == ewpPointer)
-                    this->m_Source.execute();
-            }
 
             CGenFPFrequency(size_t sampleRate,param_type::type freq) :
                 m_Phase(0),m_Source(param_type::transfer(freq)),m_SampleRate(sampleRate),m_bNewPhase(true)
@@ -46,21 +38,6 @@ namespace ipgdlib
             ret_type get() noexcept final 
             {
                 ret_type ret(this->m_Phase, this->m_bNewPhase);
-
-#ifdef _DEBUG
-                /*
-                std::cout << typeid(*this->m_Source).hash_code();
-                std::cout << typeid(*this->m_Source).name() << std::endl;
-                */
-                size_t hash_code = typeid(*this->m_Source).hash_code();
-#endif // DEBUG
-
-                if (hash_code == 15944178417816464911)
-                {
-                    static size_t sample_id = 0;
-                    //std::cout << sample_id << '\t' << freq << '\t' << this->m_Phase << '\t' << this->m_bNewPhase << std::endl;
-                    sample_id++;
-                }
 
                 auto freq = param_type::dereference(this->m_Source).get();
 

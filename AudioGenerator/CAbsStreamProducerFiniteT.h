@@ -1,7 +1,7 @@
 #pragma once
 
 #include "IStreamProducerFiniteT.h"
-#include "type_kind.h"
+#include "type_kind_trait.h"
 
 namespace ipgdlib
 {
@@ -19,7 +19,7 @@ namespace ipgdlib
 
             constexpr eTypeKind getTypeKind() const noexcept final
             {
-                return type_kind<T>::getTypeKind();
+                return type_kind_trait<T>::getTypeKind();
             }
 
         };

@@ -45,6 +45,11 @@ namespace ipgdlib
                 return this->m_vInput[index];
             }
 
+            std::vector<pointer_deleter<IOperator>>& getInputVector() noexcept
+            {
+                return this->m_vInput;
+            }
+
         private:
             std::vector<pointer_deleter<IOperator>> m_vInput;
         };

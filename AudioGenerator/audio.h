@@ -82,7 +82,7 @@ namespace ipgdlib
 
 			template <eFloatingPointKind fpk>
 			static type convFromFP(TFPKind<fpk> from) {
-				return from * MAX_VALUE;
+				return type(from * MAX_VALUE);
 			}
 
 		};
@@ -299,9 +299,9 @@ namespace ipgdlib
 
 			uint32_t getByteRate() const noexcept
 			{
-				return this->getSampleRate() *
-					this->getChannelCount() *
-					this->getSampleFormatSize();
+				return (uint32_t)this->getSampleRate() *
+					(uint32_t)this->getChannelCount() *
+					(uint32_t)this->getSampleFormatSize();
 			}
 
 			uint16_t getBlockAlign() const noexcept

@@ -16,9 +16,11 @@ namespace ipgdlib
 			using param_type = pointer_deleter<IOperatorT<T>>;
 
 			CFuncSerializer(std::vector<param_type> sources) :
-				CAbsOperatorT<T>(std::move(sources)),
+				CAbsOperatorT<T>({}),
 				m_Sources(std::move(sources)),m_CurrIndex(m_Sources.size()-1)
 			{
+				for (auto& i : m_Sources)
+					this->getInputVector().push_back(i.as<IOperator>());
 			}
 
 			void reset() noexcept final

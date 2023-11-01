@@ -22,7 +22,8 @@ namespace ipgdlib
 			using param_type = pointer_deleter<IOperatorT<TFPKind<fpk>>>;
 			
 			CFuncConvAudio(param_type source) :
-				CAbsOperatorT<ret_type>({source.as<IOperator>()})
+				CAbsOperatorT<ret_type>({source.as<IOperator>()}),
+				m_Source(source)
 			{
 			}
 

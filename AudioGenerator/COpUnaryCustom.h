@@ -8,13 +8,13 @@ namespace ipgdlib
     namespace op
     {
         template <typename T>
-        class COpUnaryCustom :
+        struct COpUnaryCustom :
             public CAbsOpUnaryT<T>
         {
             using func_type = std::function<T(T)>;
 
             COpUnaryCustom(func_type func,pointer_deleter<IOperatorT<T>> operand) :
-                CAbsOpUnaryT<T>({ operand.as<IOperator>() }),
+                CAbsOpUnaryT<T>({ operand }),
                 m_Function(func)
             {
             }

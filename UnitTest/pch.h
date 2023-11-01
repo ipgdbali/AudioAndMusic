@@ -9,10 +9,10 @@
 
 // add headers that you want to pre-compile here
 #include "../AudioGenerator/CGenConstant.h"
-#include "../AudioGenerator/COpNegate.h"
-#include "../AudioGenerator/COpAdd.h"
-#include "../AudioGenerator/COpMul.h"
+#include "../AudioGenerator/COpUnaryNegate.h"
+#include "../AudioGenerator/COpBinaryAdd.h"
+#include "../AudioGenerator/COpBinaryMul.h"
 
-using namespace ipgdlib::processor;
+using namespace ipgdlib::op;
 
 #endif //PCH_H

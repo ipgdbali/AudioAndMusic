@@ -1,18 +1,18 @@
 #include "pch.h"
 #include "CppUnitTest.h"
-#include "../AudioGenerator/COpNegate.h"
+#include "../AudioGenerator/COpUnaryNegate.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace UnitTest
 {
-	TEST_CLASS(COpNegate)
+	TEST_CLASS(COpUnaryNegate)
 	{
 	public:
 
 		TEST_METHOD(Basic)
 		{
-			ipgdlib::processor::COpNegate<int> negate(new ipgdlib::processor::CGenConstant<int>(10));
+			ipgdlib::op::COpUnaryNegate<int> negate(new ipgdlib::op::CGenConstant<int>(10));
 
 			Assert::AreEqual<int>(negate.get(), -10);
 			Assert::AreEqual<int>(negate.get(), -10);

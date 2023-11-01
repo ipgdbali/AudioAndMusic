@@ -21,7 +21,7 @@
     <ClInclude Include="eFloatingPointKind.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="IProcessor.h">
+    <ClInclude Include="IOperator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="pointer_deleter.h">
@@ -30,22 +30,22 @@
     <ClInclude Include="CGenConstant.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CAbsProcessorNoInputT.h">
+    <ClInclude Include="CAbsOperatorNoInputT.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="IProcessorT.h">
+    <ClInclude Include="IOperatorT.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CAbsProcessorT.h">
+    <ClInclude Include="CAbsOperatorT.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="COpNegate.h">
+    <ClInclude Include="COpUnaryNegate.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="COpAdd.h">
+    <ClInclude Include="COpBinaryAdd.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="COpMul.h">
+    <ClInclude Include="COpBinaryMul.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CAbsOpBinaryT.h">
@@ -57,7 +57,37 @@
     <ClInclude Include="COpBinary.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="COpUnary.h">
+    <ClInclude Include="COpUnaryCustom.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="COpUnaryPower.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="COpUnaryExponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="COscillator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="COscSine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="COscPWM.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="COscTriangle2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CFuncFork.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CFuncSerializer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CFuncConvAudio.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="audio.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

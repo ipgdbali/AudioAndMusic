@@ -2,7 +2,7 @@
 #include "CppUnitTest.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
-using namespace ipgdlib::processor;
+using namespace ipgdlib::op;
 
 namespace UnitTest
 {
@@ -13,7 +13,7 @@ namespace UnitTest
 		TEST_METHOD(StackInit)
 		{
 
-			ipgdlib::processor::CGenConstant<int> genConstant(10);
+			ipgdlib::op::CGenConstant<int> genConstant(10);
 			Assert::AreEqual(genConstant.get(), 10);
 			Assert::AreEqual(genConstant.get(), 10);
 
@@ -24,7 +24,7 @@ namespace UnitTest
 
 		TEST_METHOD(HeapInit)
 		{
-			auto  pGenConstant = new ipgdlib::processor::CGenConstant<int>(10);
+			auto  pGenConstant = new ipgdlib::op::CGenConstant<int>(10);
 
 			Assert::AreEqual(pGenConstant->get(), 10);
 			Assert::AreEqual(pGenConstant->get(), 10);

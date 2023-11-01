@@ -46,42 +46,6 @@ namespace ipgdlib
         };
 
 
-        template <eFloatingPointKind fpk,eWrapParam wp = ewpPointer>
-        struct CGenSine :
-            public CAbsStreamProducerT<TFPKind<fpk>>
-        {
-            using float_type    = TFPKind<fpk>;
-            using param_type    = wrap_param<IStreamProducerT< std::pair<float_type,bool> >, wp>;
-            using ret_type      = float_type;
-
-            ~CGenSine()
-            {
-                if constexpr (wp == ewpPointer)
-                    this->m_Source.execute();
-            }
-
-            CGenSine(param_type::type genFrequency) :
-                m_Source(param_type::transfer(genFrequency))
-            {
-            }
-
-            void reset() noexcept final
-            {
-                param_type::dereference(this->m_Source).reset();
-            }
-
-            ret_type get() noexcept final
-            {
-                if constexpr (fpk == efpk32Bit)
-                    return sinf(param_type::dereference(this->m_Source).get().first * M_PI2);
-                else
-                    return sin(param_type::dereference(this->m_Source).get().first * M_PI2);
-            }
-
-        private:
-            param_type::type m_Source;
-            
-        };
 
         template <eFloatingPointKind fpk, eWrapParam wp = ewpPointer>
         struct CGenPWM :

@@ -4,20 +4,20 @@
 
 namespace ipgdlib
 {
-    namespace processor
+    namespace op
     {
         template <typename T>
-        struct COpNegate :
+        struct COpUnaryNegate :
             public CAbsOpUnaryT<T>
         {
-            COpNegate(pointer_deleter<IProcessorT<T>> operand) :
-                CAbsOpUnaryT<T>({ operand.as<IProcessor>()})
+            COpUnaryNegate(pointer_deleter<IOperatorT<T>> operand) :
+                CAbsOpUnaryT<T>({ operand })
             {
             }
 
             T get() noexcept final
             {
-                return -this->getOperand();
+                return -this->getOperand()->get();
             }
 
         };

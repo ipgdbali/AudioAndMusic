@@ -5,7 +5,7 @@
 
 namespace ipgdlib
 {
-    namespace processor
+    namespace op
     {
 
         template <typename T>
@@ -14,7 +14,7 @@ namespace ipgdlib
         {
             using func_type = std::function<T(T, T)>;
 
-            COpBinary(func_type func, pointer_deleter<IProcessorT<T>> left, pointer_deleter<IProcessorT<T>> right) :
+            COpBinary(func_type func, pointer_deleter<IOperatorT<T>> left, pointer_deleter<IOperatorT<T>> right) :
                 CAbsOpBinaryT<T>(left, right),
                 m_Function(func)
             {

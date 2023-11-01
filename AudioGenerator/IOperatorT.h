@@ -1,15 +1,15 @@
 #pragma once
 
-#include "IProcessor.h"
+#include "IOperator.h"
 
 namespace ipgdlib
 {
-	namespace processor
+	namespace op
 	{
 
 		template <typename T>
-		struct IProcessorT :
-			public IProcessor
+		struct IOperatorT :
+			public IOperator
 		{
 			virtual T get() noexcept = 0;
 
@@ -22,6 +22,7 @@ namespace ipgdlib
 			{
 				return type_kind_trait<T>::typeSize();
 			}
+
 		};
 
 	}

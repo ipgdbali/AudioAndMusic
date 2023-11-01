@@ -21,13 +21,10 @@
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TCOpNegate.cpp">
+    <ClCompile Include="TCOpUnaryNegate.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TCOpAdd.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TCMul.cpp">
+    <ClCompile Include="TCOpBinaryMul.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -5,18 +5,17 @@
 
 namespace ipgdlib
 {
-    namespace processor
+    namespace op
     {
         template <typename T>
-        class COpUnary :
+        class COpUnaryCustom :
             public CAbsOpUnaryT<T>
         {
             using func_type = std::function<T(T)>;
 
-            COpUnary(func_type func,pointer_deleter<IProcessorT<T>> operand) :
-                CAbsOpUnaryT<T>({ operand.as<IProcessor>() }),
-                m_Function(func),
-                m_Operand(operand)
+            COpUnaryCustom(func_type func,pointer_deleter<IOperatorT<T>> operand) :
+                CAbsOpUnaryT<T>({ operand.as<IOperator>() }),
+                m_Function(func)
             {
             }
 

@@ -1,37 +1,29 @@
 #pragma once
 
-#include "wrap_param.h"
-#include "CAbsStreamProducerT.h"
+#include "CAbsOperatorT.h"
 #include <vector>
 
 namespace ipgdlib
 {
-	namespace stream
+	namespace op
 	{
 
-		template <typename T, eWrapParam wp = ewpPointer>
+		template <typename T>
 		struct CFuncSerializer :
-			public CAbsStreamProducerT<T>
+			public CAbsOperatorT<T>
 		{
 			using type = T;
-			using param_type = typename wrap_param<IStreamProducerT<T>, wp>;
+			using param_type = pointer_deleter<IOperatorT<T>>;
 
-			~CFuncSerializer()
-			{
-				if constexpr (wp == ewpPointer)
-					for(auto & item : this->m_Sources)
-							item.execute();
-			}
-
-			CFuncSerializer(std::vector<typename param_type::type> sources) :
+			CFuncSerializer(std::vector<param_type> sources) :
+				CAbsOperatorT<T>(std::move(sources)),
 				m_Sources(std::move(sources)),m_CurrIndex(m_Sources.size()-1)
 			{
 			}
 
 			void reset() noexcept final
 			{
-				for (auto& source : m_Sources)
-					param_type::dereference(source).reset();
+				CAbsOperatorT<T>::reset();
 				m_CurrIndex = m_Sources.size() - 1;
 			}
 
@@ -40,11 +32,11 @@ namespace ipgdlib
 				m_CurrIndex++;
 				if (m_CurrIndex == m_Sources.size())
 					m_CurrIndex = 0;
-				return param_type::dereference(m_Sources[m_CurrIndex]).get();
+				return m_Sources[m_CurrIndex]->get();
 			}
 
 		private:
-			std::vector<typename param_type::type>	m_Sources;
+			std::vector<param_type>						m_Sources;
 			size_t										m_CurrIndex;
 		};
 	}

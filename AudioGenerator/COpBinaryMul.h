@@ -4,22 +4,22 @@
 
 namespace ipgdlib
 {
-    namespace processor
+    namespace op
     {
 
         template <typename T>
-        struct COpMul :
+        struct COpBinaryMul :
             public CAbsOpBinaryT<T>
         {
 
-            COpMul(pointer_deleter<IProcessorT<T>> left, pointer_deleter<IProcessorT<T>> right) :
+            COpBinaryMul(pointer_deleter<IOperatorT<T>> left, pointer_deleter<IOperatorT<T>> right) :
                 CAbsOpBinaryT<T>(left,right)
             {
             }
 
             T get() noexcept final
             {
-                return this->getLeft() * this->getRight();
+                return this->getLeft()->get() * this->getRight()->get();
             }
 
         };

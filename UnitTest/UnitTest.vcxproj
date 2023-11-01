@@ -164,9 +164,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="TCGenConstant.cpp" />
-    <ClCompile Include="TCMul.cpp" />
-    <ClCompile Include="TCOpAdd.cpp" />
-    <ClCompile Include="TCOpNegate.cpp" />
+    <ClCompile Include="TCOpBinaryMul.cpp" />
+    <ClCompile Include="TCOpUnaryNegate.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />

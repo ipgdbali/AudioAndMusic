@@ -1,19 +1,21 @@
 #pragma once
 
-#include "CAbsProcessorT.h"
+#include "CAbsOperatorT.h"
 
 namespace ipgdlib
 {
-    namespace processor
+    namespace op
     {
 
         template <typename T>
         struct CAbsOpUnaryT :
-            public CAbsProcessorT<T>
+            public CAbsOperatorT<T>
         {
 
-            CAbsOpUnaryT(pointer_deleter<IProcessorT<T>> operand) :
-                CAbsProcessorT<T>({ operand }),
+            using param_type = pointer_deleter<IOperatorT<T>>;
+
+            CAbsOpUnaryT(param_type operand) :
+                CAbsOperatorT<T>({ operand.as<IOperator>()}),
                 m_Operand(operand)
             {
             }
@@ -24,13 +26,13 @@ namespace ipgdlib
             }
 
         protected:
-            IProcessorT<T>* getOperand() const noexcept
+            IOperatorT<T>* getOperand() const noexcept
             {
                 return this->m_Operand;
             }
 
         private:
-            IProcessorT<T>* m_Operand;
+            IOperatorT<T>* m_Operand;
         };
 
     }

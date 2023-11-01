@@ -1,15 +1,15 @@
 #pragma once
 
-#include "CAbsProcessorNoInputT.h"
+#include "CAbsOperatorNoInputT.h"
 
 namespace ipgdlib
 {
-	namespace processor
+	namespace op
 	{
 
 		template <typename T>
 		struct CGenConstant :
-			public CAbsProcessorNoInputT<T>
+			public CAbsOperatorNoInputT<T>
 		{
 			CGenConstant(T constant) :
 				m_Constant(constant)

@@ -11,7 +11,7 @@ namespace UnitTest
 
 		TEST_METHOD(Basic)
 		{
-			ipgdlib::processor::COpAdd<int> Out(
+			COpBinaryAdd<int> Out(
 				new CGenConstant<int>(10),
 				new CGenConstant<int>(30)
 			);

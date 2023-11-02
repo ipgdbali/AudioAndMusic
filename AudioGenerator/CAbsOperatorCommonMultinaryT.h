@@ -8,16 +8,15 @@ namespace ipgdlib
     namespace op
     {
 
-        template <typename T>
+        template <typename TIO>
         class CAbsOperatorCommonMultinaryT :
-            public CAbsOperatorT<T>
+            public CAbsOperatorT<TIO>
         {
-            using param_type = pointer_deleter<IOperatorT<T>>;
+            using param_type = pointer_deleter<IOperatorT<TIO>>;
 
             CAbsOperatorCommonMultinaryT(
-                std::initializer_list<pointer_deleter<IOperatorT<T>>> operands) :
-                CAbsOperatorT<T>({ left.as<IOperator>() , right.as<IOperator>() }),
-                m_Left(left), m_Right(right)
+                std::initializer_list<param_type operands) :
+                CAbsOperatorT<TIO>(operands)
             {
             }
 

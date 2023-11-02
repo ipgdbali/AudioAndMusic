@@ -3,17 +3,17 @@
 
 #include "CGenConstant.h"
 #include "COscillator.h"
-#include "CFuncFork.h"
-#include "COscSine.h"
+#include "COCURepeater.h"
+#include "COCUSine.h"
 #include "COscPWM.h"
 #include "COscTriangle.h"
 #include "CFuncSerializer.h"
 #include "CFuncConvAudio.h"
 
-#include "COpUnaryCustom.h"
-#include "COpUnaryNegate.h"
-#include "COpBinaryAdd.h"
-#include "COpBinaryMul.h"
+#include "COCUCustom.h"
+#include "COCUNegate.h"
+#include "COCBAdd.h"
+#include "COCBMul.h"
 #include "COpBinary.h"
 
 
@@ -37,9 +37,9 @@ using namespace ipgdlib::op;
 
 int main(int argc, char* argv[])
 {
-	COpBinaryAdd<FLOATING_POINT_TYPE> modSignal(
+	COCBAdd<FLOATING_POINT_TYPE> modSignal(
 		new CGenConstant<FLOATING_POINT_TYPE>(440.0),
-		new COpBinaryMul<FLOATING_POINT_TYPE>(
+		new COCBMul<FLOATING_POINT_TYPE>(
 			new CGenConstant<FLOATING_POINT_TYPE>(100),
 			new COscTriangle<efpk64Bit>(
 				new COscillator<FLOATING_POINT_KIND>(SAMPLE_RATE,
@@ -51,8 +51,8 @@ int main(int argc, char* argv[])
 		)
 	);
 
-	CFuncFork<FLOATING_POINT_TYPE> fork(2,
-		new COscSine<efpk64Bit>(
+	COCURepeater<FLOATING_POINT_TYPE> fork(2,
+		new COCUSine<efpk64Bit>(
 			new COscillator<FLOATING_POINT_KIND>(SAMPLE_RATE,
 				modSignal
 			)
@@ -62,7 +62,7 @@ int main(int argc, char* argv[])
 	CFuncConvAudio<SAMPLE_FORMAT_KIND, FLOATING_POINT_KIND> genAudio(
 		new CFuncSerializer<FLOATING_POINT_TYPE>({
 			fork,
-			new COpUnaryNegate<FLOATING_POINT_TYPE>(fork)
+			new COCUNegate<FLOATING_POINT_TYPE>(fork)
 		})
 	);
 

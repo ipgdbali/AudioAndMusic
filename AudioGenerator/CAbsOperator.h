@@ -4,6 +4,7 @@
 #include "IOperatorT.h"
 #include "pointer_deleter.h"
 #include <vector>
+#include <algorithm>
 
 namespace ipgdlib
 {
@@ -11,19 +12,24 @@ namespace ipgdlib
     {
 
         template <typename TOutput>
-        struct CAbsOperatorT :
+        struct CAbsOperator :
             public IOperatorT<TOutput>
         {
-            
+
             using ret_type = TOutput;
 
-            ~CAbsOperatorT()
+            ~CAbsOperator()
             {
                 for (auto i : this->m_vInput)
                     i.execute();
             }
 
-            CAbsOperatorT(std::initializer_list<pointer_deleter<IOperator>> operands) :
+            CAbsOperator(std::initializer_list<pointer_deleter<IOperator>> operands) :
+                m_vInput(std::move(operands))
+            {
+            }
+
+            CAbsOperator(std::vector<pointer_deleter<IOperator>> operands) :
                 m_vInput(std::move(operands))
             {
             }
@@ -34,20 +40,15 @@ namespace ipgdlib
                     i->reset();
             }
 
-            size_t getOperatorInputCount()
+            size_t getOperandCount()
             {
                 return this->m_vInput.size();
             }
 
         protected:
-            IOperator* getOperatorInput(size_t index) const
+            IOperator* getOperand(size_t index) const
             {
                 return this->m_vInput[index];
-            }
-
-            std::vector<pointer_deleter<IOperator>>& getInputVector() noexcept
-            {
-                return this->m_vInput;
             }
 
         private:

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "CAbsOperatorCommonUnaryT.h"
+#include "CAbsOperatorCommonUnary.h"
 #include <functional>
 
 namespace ipgdlib
@@ -8,13 +8,13 @@ namespace ipgdlib
     namespace op
     {
         template <typename T>
-        struct COpUnaryCustom :
-            public CAbsOperatorCommonUnaryT<T>
+        struct COCUCustom :
+            public CAbsOperatorCommonUnary<T>
         {
             using func_type = std::function<T(T)>;
 
-            COpUnaryCustom(func_type func,pointer_deleter<IOperatorT<T>> operand) :
-                CAbsOperatorCommonUnaryT<T>({ operand }),
+            COCUCustom(func_type func,pointer_deleter<IOperatorT<T>> operand) :
+                CAbsOperatorCommonUnary<T>(operand),
                 m_Function(func)
             {
             }

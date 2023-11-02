@@ -23,7 +23,7 @@ namespace ipgdlib
 				return dynamic_cast<IOperatorT<T>*>(this);
 			}
 
-			virtual size_t getOperatorInputCount() = 0;
+			virtual size_t getOperandCount() = 0;
 		};
 
 	}

@@ -18,3 +18,4 @@ next commit :
 removing COscilatorFunc.h
 
 adding CAbsOperatorMultinary
+remove name with postfixT

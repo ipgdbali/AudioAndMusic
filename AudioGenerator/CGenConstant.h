@@ -1,6 +1,6 @@
 #pragma once
 
-#include "CAbsOperatorNoInputT.h"
+#include "CAbsOperatorGenerator.h"
 
 namespace ipgdlib
 {
@@ -9,7 +9,7 @@ namespace ipgdlib
 
 		template <typename T>
 		struct CGenConstant :
-			public CAbsOperatorNoInputT<T>
+			public CAbsOperatorGenerator<T>
 		{
 			CGenConstant(T constant) :
 				m_Constant(constant)

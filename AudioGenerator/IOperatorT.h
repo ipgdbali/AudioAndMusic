@@ -23,6 +23,8 @@ namespace ipgdlib
 				return type_kind_trait<T>::typeSize();
 			}
 
+			using IOperator::as;
+
 		};
 
 	}

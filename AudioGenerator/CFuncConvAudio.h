@@ -1,6 +1,6 @@
 #pragma once
 
-#include "CAbsOperatorT.h"
+#include "CAbsOperator.h"
 #include "IOperatorT.h"
 #include "eFloatingPointKind.h"
 #include "audio.h"
@@ -14,7 +14,7 @@ namespace ipgdlib
 
 		template <eSampleFormatKind sfk,eFloatingPointKind fpk>
 		struct CFuncConvAudio :
-			public CAbsOperatorT<typename sample_format_trait<sfk>::type>
+			public CAbsOperatorCommonUnary<typename sample_format_trait<sfk>::type>
 		{
 
 			using float_type = TFPKind<fpk>;
@@ -22,7 +22,7 @@ namespace ipgdlib
 			using param_type = pointer_deleter<IOperatorT<TFPKind<fpk>>>;
 			
 			CFuncConvAudio(param_type source) :
-				CAbsOperatorT<ret_type>({source.as<IOperator>()}),
+				CAbsOperatorCommonUnary<ret_type>({source.as<IOperator>()}),
 				m_Source(source)
 			{
 			}

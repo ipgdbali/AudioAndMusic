@@ -19,12 +19,22 @@ namespace ipgdlib
 			}
 		}
 
+		pointer_deleter() :
+			pointer_deleter(nullptr,false)
+		{
+
+		}
+
 		pointer_deleter(const pointer_deleter<T>& ref) :
 			m_Pointer(ref.m_Pointer),m_bDeleted(ref.m_bDeleted)
 		{
 		}
 
-		void operator = (const pointer_deleter<T>& ref) = delete;
+		void operator = (const pointer_deleter<T>& ref)
+		{
+			this->m_Pointer = ref.m_Pointer;
+			this->m_bDeleted = ref.m_bDeleted;
+		}
 
 		pointer_deleter(pointer_deleter<T>&& ref) :
 			m_Pointer(ref.m_Pointer), m_bDeleted(ref.m_bDeleted)
@@ -33,7 +43,13 @@ namespace ipgdlib
 			ref.m_bDeleted = false;
 		}
 
-		void operator = (pointer_deleter<T>&& ref) = delete;
+		void operator = (pointer_deleter<T>&& ref)
+		{
+			this->m_Pointer = ref.m_Pointer;
+			this->m_bDeleted = ref.m_bDeleted;
+			ref.m_Pointer = nullptr;
+			ref.m_bDeleted = false;
+		}
 
 		pointer_deleter(T* ptr, bool bDeleted = true) :
 			m_Pointer(ptr), m_bDeleted(bDeleted)

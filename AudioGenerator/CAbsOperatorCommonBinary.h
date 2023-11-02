@@ -1,6 +1,6 @@
 #pragma once
 
-#include "CAbsOperatorT.h"
+#include "CAbsOperator.h"
 
 namespace ipgdlib
 {
@@ -8,28 +8,28 @@ namespace ipgdlib
     {
 
         template <typename T>
-        struct CAbsOperatorCommonBinaryT :
-            public CAbsOperatorT<T>
+        struct CAbsOperatorCommonBinary :
+            public CAbsOperator<T>
         {
 
             using param_type = pointer_deleter<IOperatorT<T>>;
 
-            CAbsOperatorCommonBinaryT(
+            CAbsOperatorCommonBinary(
                 param_type left, param_type right
             ) :
-                CAbsOperatorT<T>({ left.as<IOperator>() , right.as<IOperator>() })
+                CAbsOperator<T>({ left.as<IOperator>() , right.as<IOperator>() })
             {
             }
 
         protected:
             IOperatorT<T>* getLeftOperand() const noexcept
             {
-                return dynamic_cast<IOperatorT<T>*>(this->getOperatorInput(0));
+                return dynamic_cast<IOperatorT<T>*>((IOperator*)this->getOperand(0));
             }
 
             IOperatorT<T>* getRightOperand() const noexcept
             {
-                return dynamic_cast<IOperatorT<T>*>(this->getOperatorInput(1));
+                return dynamic_cast<IOperatorT<T>*>((IOperator*)this->getOperand(1));
             }
         };
 

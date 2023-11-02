@@ -1,17 +1,17 @@
 #pragma once
 
-#include "CAbsOperatorCommonUnaryT.h"
+#include "CAbsOperatorCommonUnary.h"
 
 namespace ipgdlib
 {
     namespace op
     {
         template <typename T>
-        struct COpUnaryNegate :
-            public CAbsOperatorCommonUnaryT<T>
+        struct COCUNegate :
+            public CAbsOperatorCommonUnary<T>
         {
-            COpUnaryNegate(pointer_deleter<IOperatorT<T>> operand) :
-                CAbsOperatorCommonUnaryT<T>({ operand })
+            COCUNegate(pointer_deleter<IOperatorT<T>> operand) :
+                CAbsOperatorCommonUnary<T>({ operand })
             {
             }
 

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "eFloatingPointKind.h"
-#include "CAbsOperatorT.h"
+#include "CAbsOperator.h"
 #include <cstdint>
 #include <string>
 #include <fstream>

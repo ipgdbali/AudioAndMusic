@@ -1,6 +1,6 @@
 #pragma once
 
-#include "CAbsOperatorT.h"
+#include "CAbsOperatorCommonBinary.h"
 #include "IOperatorT.h"
 #include "eFloatingPointKind.h"
 #include "pointer_deleter.h"
@@ -13,7 +13,7 @@ namespace ipgdlib
 
         template <eFloatingPointKind fpk>
         struct COscTriangle :
-            public CAbsOperatorT<TFPKind<fpk>>
+            public CAbsOperatorCommonBinary<TFPKind<fpk>>
         {
             using float_type = TFPKind<fpk>;
             using ret_type = float_type;
@@ -22,26 +22,21 @@ namespace ipgdlib
                 pointer_deleter<IOperatorT<float_type>> opOsc,
                 pointer_deleter<IOperatorT<float_type>> opDutyCycle
             ) :
-                CAbsOperatorT<float_type>({ opOsc.as<IOperator>(),opDutyCycle.as<IOperator>() }), 
-                m_Osc(opOsc), m_DutyCycle(opDutyCycle)
+                CAbsOperatorCommonBinary<float_type>(opOsc,opDutyCycle)
             {
             }
 
             ret_type get() noexcept final
             {
 
-                float_type osc = this->m_Osc->get();
-                float_type duty = this->m_DutyCycle->get();
+                float_type osc = this->getLeftOperand()->get();
+                float_type duty = this->getRightOperand()->get();
 
                 if (osc < duty)
                     return osc / duty * 2 - 1;
                 else
                     return -((osc - duty) / (1-duty) * 2 - 1);
             }
-
-        private:
-            IOperatorT<float_type>* m_Osc;
-            IOperatorT<float_type>* m_DutyCycle;
 
         };
 

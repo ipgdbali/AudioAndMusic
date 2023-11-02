@@ -30,46 +30,46 @@
     <ClInclude Include="CGenConstant.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CAbsOperatorNoInputT.h">
+    <ClInclude Include="CAbsOperatorGenerator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="IOperatorT.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CAbsOperatorT.h">
+    <ClInclude Include="CAbsOperator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="COpUnaryNegate.h">
+    <ClInclude Include="COCUNegate.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="COpBinaryAdd.h">
+    <ClInclude Include="COCBAdd.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="COpBinaryMul.h">
+    <ClInclude Include="COCBMul.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CAbsOperatorCommonBinaryT.h">
+    <ClInclude Include="CAbsOperatorCommonBinary.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CAbsOperatorCommonUnaryT.h">
+    <ClInclude Include="CAbsOperatorCommonUnary.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="COpBinary.h">
+    <ClInclude Include="COCBCustom.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="COpUnaryCustom.h">
+    <ClInclude Include="COCUCustom.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="COpUnaryPower.h">
+    <ClInclude Include="COCUPower.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="COpUnaryExponent.h">
+    <ClInclude Include="COCUExponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="COscillator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="COscSine.h">
+    <ClInclude Include="COCUSine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="COscPWM.h">
@@ -78,10 +78,10 @@
     <ClInclude Include="COscTriangle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CFuncFork.h">
+    <ClInclude Include="COCURepeater.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CFuncSerializer.h">
+    <ClInclude Include="COCMSerializer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CFuncConvAudio.h">
@@ -90,7 +90,19 @@
     <ClInclude Include="audio.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CAbsOperatorCommonMultinaryT.h">
+    <ClInclude Include="CAbsOperatorCommon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="COCUCosine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="COCBPower.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="COCUAdd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="COCUMul.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

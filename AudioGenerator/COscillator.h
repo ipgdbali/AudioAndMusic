@@ -1,7 +1,7 @@
 #pragma once
 
 #include <utility>
-#include "CAbsOperatorCommonUnaryT.h"
+#include "CAbsOperatorCommonUnary.h"
 #include "eFloatingPointKind.h"
 
 namespace ipgdlib
@@ -12,16 +12,15 @@ namespace ipgdlib
 
         template <eFloatingPointKind fpk>
         struct COscillator :
-            public CAbsOperatorT<TFPKind<fpk>>
+            public CAbsOperatorCommonUnary<TFPKind<fpk>>
         {
             using T = TFPKind<fpk>;
             using param_type = pointer_deleter<IOperatorT<TFPKind<fpk>>>;
 
             COscillator(size_t sampleRate,param_type freq) :
-                CAbsOperatorT<T>({freq.as<IOperator>()}),
+                CAbsOperatorCommonUnary<T>(freq),
                 m_SampleRate(sampleRate), 
-                m_Phase(0),m_bNewPhase(true),
-                m_Freq(freq)
+                m_Phase(0),m_Freq(freq)
             {
             }
 
@@ -32,9 +31,8 @@ namespace ipgdlib
 
             void reset() noexcept final
             {
-                CAbsOperatorT<T>::reset();
+                CAbsOperatorCommonUnary<T>::reset();
                 this->m_Phase = 0;
-                this->m_bNewPhase = true;
             }
 
             T get() noexcept final 
@@ -52,7 +50,6 @@ namespace ipgdlib
         private:
 
             TFPKind<fpk>    m_Phase;
-            bool            m_bNewPhase;
             size_t          m_SampleRate;
             IOperatorT<TFPKind<fpk>>* m_Freq;
         };

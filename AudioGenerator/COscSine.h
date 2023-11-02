@@ -6,14 +6,10 @@
 #include "pointer_deleter.h"
 #include <utility>
 
-#define M_PI 
-#define M_PI2 (2 * M_PI)
-
 namespace ipgdlib
 {
     namespace op
     {
-
 
         template <eFloatingPointKind fpk>
         struct COscSine :

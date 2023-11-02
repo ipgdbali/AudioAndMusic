@@ -11,3 +11,8 @@ static variable pada virtual noexcept final std::pair
 
 branch / change
 - remove std::pair in oscilator
+
+Feature
+
+next commit :
+removing COscilatorFunc.h

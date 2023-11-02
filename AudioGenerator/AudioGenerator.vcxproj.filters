@@ -48,10 +48,10 @@
     <ClInclude Include="COpBinaryMul.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CAbsOperatorBinaryT.h">
+    <ClInclude Include="CAbsOperatorCommonBinaryT.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CAbsOperatorUnaryT.h">
+    <ClInclude Include="CAbsOperatorCommonUnaryT.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="COpBinary.h">

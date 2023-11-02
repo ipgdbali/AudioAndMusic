@@ -8,13 +8,13 @@ namespace ipgdlib
     {
 
         template <typename T>
-        struct CAbsOperatorBinaryT :
+        struct CAbsOperatorCommonBinaryT :
             public CAbsOperatorT<T>
         {
 
             using param_type = pointer_deleter<IOperatorT<T>>;
 
-            CAbsOperatorBinaryT(pointer_deleter<IOperatorT<T>> left, pointer_deleter<IOperatorT<T>> right) :
+            CAbsOperatorCommonBinaryT(pointer_deleter<IOperatorT<T>> left, pointer_deleter<IOperatorT<T>> right) :
                 CAbsOperatorT<T>({ left.as<IOperator>() , right.as<IOperator>() }),
                 m_Left(left), m_Right(right)
             {

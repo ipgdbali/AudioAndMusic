@@ -14,27 +14,23 @@ namespace ipgdlib
 
             using param_type = pointer_deleter<IOperatorT<T>>;
 
-            CAbsOperatorCommonBinaryT(pointer_deleter<IOperatorT<T>> left, pointer_deleter<IOperatorT<T>> right) :
+            CAbsOperatorCommonBinaryT(
+                pointer_deleter<IOperatorT<T>> left, pointer_deleter<IOperatorT<T>> right
+            ) :
                 CAbsOperatorT<T>({ left.as<IOperator>() , right.as<IOperator>() }),
                 m_Left(left), m_Right(right)
             {
             }
 
-            void reset() noexcept override
-            {
-                this->m_Left->reset();
-                this->m_Right->reset();
-            }
-
         protected:
-            IOperatorT<T>* getLeft() const noexcept
+            IOperatorT<T>* getLeftOperand() const noexcept
             {
-                return this->m_Left;
+                return dynamic_cast<IOperatorT<T>*>(this->getOperatorInput(0));
             }
 
-            IOperatorT<T>* getRight() const noexcept
+            IOperatorT<T>* getRightOperand() const noexcept
             {
-                return this->m_Right;
+                return dynamic_cast<IOperatorT<T>*>(this->getOperatorInput(1));
             }
 
         private:

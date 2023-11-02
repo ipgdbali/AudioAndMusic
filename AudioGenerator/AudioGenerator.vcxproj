@@ -130,6 +130,7 @@
   <ItemGroup>
     <ClInclude Include="audio.h" />
     <ClInclude Include="CAbsOperatorCommonBinaryT.h" />
+    <ClInclude Include="CAbsOperatorCommonMultinaryT.h" />
     <ClInclude Include="CAbsOperatorCommonUnaryT.h" />
     <ClInclude Include="CAbsOperatorNoInputT.h" />
     <ClInclude Include="CAbsOperatorT.h" />

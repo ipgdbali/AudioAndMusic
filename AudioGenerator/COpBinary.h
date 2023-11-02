@@ -32,7 +32,7 @@ namespace ipgdlib
 
             T get() noexcept final
             {
-                return this->m_Function(this->getLeft(),this->getRight());
+                return this->m_Function(this->getLeftOperandOperand(),this->getRightOperand());
             }
 
         private:

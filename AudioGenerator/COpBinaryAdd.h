@@ -18,7 +18,7 @@ namespace ipgdlib
 
             T get() noexcept final
             {
-                return this->getLeft()->get() + this->getRight()->get();
+                return this->getLeftOperand()->get() + this->getRightOperand()->get();
             }
 
         };

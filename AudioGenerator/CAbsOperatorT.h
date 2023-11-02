@@ -23,12 +23,12 @@ namespace ipgdlib
                     i.execute();
             }
 
-            CAbsOperatorT(std::vector<pointer_deleter<IOperator>> vInput) :
-                m_vInput(std::move(vInput))
+            CAbsOperatorT(std::initializer_list<pointer_deleter<IOperator>> operands) :
+                m_vInput(std::move(operands))
             {
             }
 
-            void reset() noexcept
+            void reset() noexcept override
             {
                 for (auto& i : this->m_vInput)
                     i->reset();
@@ -40,7 +40,7 @@ namespace ipgdlib
             }
 
         protected:
-            IOperator* getOperatorInput(size_t index)
+            IOperator* getOperatorInput(size_t index) const
             {
                 return this->m_vInput[index];
             }

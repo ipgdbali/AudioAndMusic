@@ -16,3 +16,5 @@ Feature
 
 next commit :
 removing COscilatorFunc.h
+
+adding CAbsOperatorMultinary

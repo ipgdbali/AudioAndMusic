@@ -7,32 +7,23 @@ namespace ipgdlib
     namespace op
     {
 
-        template <typename T>
+        template <typename TIO>
         struct CAbsOperatorCommonUnaryT :
-            public CAbsOperatorT<T>
+            public CAbsOperatorT<TIO>
         {
 
-            using param_type = pointer_deleter<IOperatorT<T>>;
+            using param_type = pointer_deleter<IOperatorT<TIO>>;
 
             CAbsOperatorCommonUnaryT(param_type operand) :
-                CAbsOperatorT<T>({ operand.as<IOperator>()}),
-                m_Operand(operand)
+                CAbsOperatorT<TIO>({ operand.as<IOperator>()})
             {
-            }
-
-            void reset() noexcept override
-            {
-                this->m_Operand->reset();
             }
 
         protected:
-            IOperatorT<T>* getOperand() const noexcept
+            IOperatorT<TIO>* getOperand() const noexcept
             {
-                return this->m_Operand;
+                return dynamic_cast<IOperatorT<TIO>*>(this->getOperatorInput(0));
             }
-
-        private:
-            IOperatorT<T>* m_Operand;
         };
 
     }

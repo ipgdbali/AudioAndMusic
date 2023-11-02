@@ -12,9 +12,9 @@ namespace ipgdlib
 
         template <eFloatingPointKind fpk>
         struct COscillator :
-            public CAbsOperatorT<std::pair<TFPKind<fpk>,bool>>
+            public CAbsOperatorT<TFPKind<fpk>>
         {
-            using T = std::pair<TFPKind<fpk>,bool>;
+            using T = TFPKind<fpk>;
             using param_type = pointer_deleter<IOperatorT<TFPKind<fpk>>>;
 
             COscillator(size_t sampleRate,param_type freq) :
@@ -39,18 +39,12 @@ namespace ipgdlib
 
             T get() noexcept final 
             {
-                T ret(this->m_Phase,this->m_bNewPhase);
+                T ret(this->m_Phase);
 
                 this->m_Phase += (this->m_Freq->get() / this->m_SampleRate);
-                
-                if (this->m_bNewPhase)
-                    this->m_bNewPhase = false;
 
                 if (this->m_Phase >= 1.0)
-                {
                     this->m_Phase = this->m_Phase - (int)this->m_Phase;
-                    this->m_bNewPhase = true;
-                }
 
                 return ret;
             }

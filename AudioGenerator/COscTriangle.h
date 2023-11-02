@@ -12,14 +12,14 @@ namespace ipgdlib
     {
 
         template <eFloatingPointKind fpk>
-        struct COscTriangle2 :
+        struct COscTriangle :
             public CAbsOperatorT<TFPKind<fpk>>
         {
             using float_type = TFPKind<fpk>;
             using ret_type = float_type;
 
-            COscTriangle2(
-                pointer_deleter<IOperatorT<std::pair<float_type, bool>>> opOsc,
+            COscTriangle(
+                pointer_deleter<IOperatorT<float_type>> opOsc,
                 pointer_deleter<IOperatorT<float_type>> opDutyCycle
             ) :
                 CAbsOperatorT<float_type>({ opOsc.as<IOperator>(),opDutyCycle.as<IOperator>() }), 
@@ -30,7 +30,7 @@ namespace ipgdlib
             ret_type get() noexcept final
             {
 
-                float_type osc = this->m_Osc->get().first;
+                float_type osc = this->m_Osc->get();
                 float_type duty = this->m_DutyCycle->get();
 
                 if (osc < duty)
@@ -40,7 +40,7 @@ namespace ipgdlib
             }
 
         private:
-            IOperatorT<std::pair<float_type, bool>>* m_Osc;
+            IOperatorT<float_type>* m_Osc;
             IOperatorT<float_type>* m_DutyCycle;
 
         };

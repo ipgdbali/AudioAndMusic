@@ -8,3 +8,6 @@
 Adds std::vector in CAbsStreamProducer to delete all instance of eWrapParam
 
 static variable pada virtual noexcept final std::pair
+
+branch / change
+- remove std::pair in oscilator

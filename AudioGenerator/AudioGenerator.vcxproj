@@ -147,7 +147,7 @@
     <ClInclude Include="COscillator.h" />
     <ClInclude Include="COscPWM.h" />
     <ClInclude Include="COscSine.h" />
-    <ClInclude Include="COscTriangle2.h" />
+    <ClInclude Include="COscTriangle.h" />
     <ClInclude Include="IOperatorT.h" />
     <ClInclude Include="pointer_deleter.h" />
     <ClInclude Include="eFloatingPointKind.h" />

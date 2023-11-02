@@ -6,7 +6,7 @@
 #include "CFuncFork.h"
 #include "COscSine.h"
 #include "COscPWM.h"
-#include "COscTriangle2.h"
+#include "COscTriangle.h"
 #include "CFuncSerializer.h"
 #include "CFuncConvAudio.h"
 
@@ -41,7 +41,7 @@ int main(int argc, char* argv[])
 		new CGenConstant<FLOATING_POINT_TYPE>(440.0),
 		new COpBinaryMul<FLOATING_POINT_TYPE>(
 			new CGenConstant<FLOATING_POINT_TYPE>(100),
-			new COscTriangle2<efpk64Bit>(
+			new COscTriangle<efpk64Bit>(
 				new COscillator<FLOATING_POINT_KIND>(SAMPLE_RATE,
 					new CGenConstant<FLOATING_POINT_TYPE>(1)
 				),

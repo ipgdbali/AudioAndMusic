@@ -75,7 +75,7 @@
     <ClInclude Include="COscPWM.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="COscTriangle2.h">
+    <ClInclude Include="COscTriangle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CFuncFork.h">

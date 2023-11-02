@@ -10,12 +10,12 @@ namespace ipgdlib
     namespace op
     {
 
-        template <typename T>
+        template <typename TOutput>
         struct CAbsOperatorT :
-            public IOperatorT<T>
+            public IOperatorT<TOutput>
         {
             
-            using ret_type = T;
+            using ret_type = TOutput;
 
             ~CAbsOperatorT()
             {

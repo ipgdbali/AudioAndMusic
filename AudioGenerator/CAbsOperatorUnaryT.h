@@ -8,13 +8,13 @@ namespace ipgdlib
     {
 
         template <typename T>
-        struct CAbsOpUnaryT :
+        struct CAbsOperatorUnaryT :
             public CAbsOperatorT<T>
         {
 
             using param_type = pointer_deleter<IOperatorT<T>>;
 
-            CAbsOpUnaryT(param_type operand) :
+            CAbsOperatorUnaryT(param_type operand) :
                 CAbsOperatorT<T>({ operand.as<IOperator>()}),
                 m_Operand(operand)
             {

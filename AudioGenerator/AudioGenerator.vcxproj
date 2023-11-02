@@ -129,8 +129,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="audio.h" />
-    <ClInclude Include="CAbsOpBinaryT.h" />
-    <ClInclude Include="CAbsOpUnaryT.h" />
+    <ClInclude Include="CAbsOperatorBinaryT.h" />
+    <ClInclude Include="CAbsOperatorUnaryT.h" />
     <ClInclude Include="CAbsOperatorNoInputT.h" />
     <ClInclude Include="CAbsOperatorT.h" />
     <ClInclude Include="CFuncConvAudio.h" />

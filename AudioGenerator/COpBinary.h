@@ -1,6 +1,6 @@
 #pragma once
 
-#include "CAbsOpBinaryT.h"
+#include "CAbsOperatorBinaryT.h"
 #include <functional>
 
 namespace ipgdlib
@@ -9,13 +9,13 @@ namespace ipgdlib
     {
 
         template <typename T>
-        struct COpBinary :
-            public CAbsOpBinaryT<T>
+        struct COpBinaryCustom :
+            public CAbsOperatorBinaryT<T>
         {
             using func_type = std::function<T(T, T)>;
 
-            COpBinary(func_type func, pointer_deleter<IOperatorT<T>> left, pointer_deleter<IOperatorT<T>> right) :
-                CAbsOpBinaryT<T>(left, right),
+            COpBinaryCustom(func_type func, pointer_deleter<IOperatorT<T>> left, pointer_deleter<IOperatorT<T>> right) :
+                CAbsOperatorBinaryT<T>(left, right),
                 m_Function(func)
             {
             }
@@ -25,7 +25,7 @@ namespace ipgdlib
                 return this->m_Function;
             }
 
-            void setFunction(type func)
+            void setFunction(func_type func)
             {
                 this->m_Function = func;
             }

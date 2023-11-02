@@ -1,6 +1,6 @@
 #pragma once
 
-#include "CAbsOpUnaryT.h"
+#include "CAbsOperatorUnaryT.h"
 
 namespace ipgdlib
 {
@@ -8,10 +8,10 @@ namespace ipgdlib
     {
         template <typename T>
         struct COpUnaryNegate :
-            public CAbsOpUnaryT<T>
+            public CAbsOperatorUnaryT<T>
         {
             COpUnaryNegate(pointer_deleter<IOperatorT<T>> operand) :
-                CAbsOpUnaryT<T>({ operand })
+                CAbsOperatorUnaryT<T>({ operand })
             {
             }
 

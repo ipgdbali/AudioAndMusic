@@ -1,6 +1,6 @@
 #pragma once
 
-#include "CAbsOpBinaryT.h"
+#include "CAbsOperatorBinaryT.h"
 
 namespace ipgdlib
 {
@@ -9,11 +9,11 @@ namespace ipgdlib
 
         template <typename T>
         struct COpBinaryMul :
-            public CAbsOpBinaryT<T>
+            public CAbsOperatorBinaryT<T>
         {
 
             COpBinaryMul(pointer_deleter<IOperatorT<T>> left, pointer_deleter<IOperatorT<T>> right) :
-                CAbsOpBinaryT<T>(left,right)
+                CAbsOperatorBinaryT<T>(left,right)
             {
             }
 

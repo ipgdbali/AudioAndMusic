@@ -1,7 +1,7 @@
 #pragma once
 
 #include <utility>
-#include "CAbsOpUnaryT.h"
+#include "CAbsOperatorUnaryT.h"
 #include "eFloatingPointKind.h"
 
 namespace ipgdlib

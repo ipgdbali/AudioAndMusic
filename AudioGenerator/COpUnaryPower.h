@@ -1,6 +1,6 @@
 #pragma once
 
-#include "CAbsOpUnaryT.h"
+#include "CAbsOperatorUnaryT.h"
 #include "eFloatingPointKind.h"
 
 namespace ipgdlib
@@ -11,12 +11,12 @@ namespace ipgdlib
 
         template <eFloatingPointKind fpk>
         struct COpUnaryPower :
-            public CAbsOpUnaryT<TFPKind<fpk>>
+            public CAbsOperatorUnaryT<TFPKind<fpk>>
         {
             using type = TFPKind<fpk>;
 
             COpUnaryPower(type exp,pointer_deleter<IOperatorT<type>> operand) :
-                m_Exponent(exp),CAbsOpUnaryT<type>({ operand.as<IOperator>() })
+                m_Exponent(exp),CAbsOperatorUnaryT<type>({ operand.as<IOperator>() })
             {
             }
 

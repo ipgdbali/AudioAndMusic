@@ -7,9 +7,9 @@ namespace ipgdlib
     namespace op
     {
 
-        template <typename T>
+        template <typename TOutput>
         struct CAbsOperatorNoInputT :
-            public IOperatorT<T>
+            public IOperatorT<TOutput>
         {
 
             size_t getOperatorInputCount()

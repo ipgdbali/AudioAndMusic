@@ -5,7 +5,7 @@
 
 namespace ipgdlib
 {
-    namespace op
+    namespace processor
     {
         template <typename T>
         struct COCUCustom :
@@ -31,7 +31,7 @@ namespace ipgdlib
 
             T get() noexcept final
             {
-                return this->m_Function(this->getOperand()->get());
+                return this->m_Function(this->getOperand().get());
             }
 
         private:

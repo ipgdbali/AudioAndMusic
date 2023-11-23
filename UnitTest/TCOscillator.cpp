@@ -1,26 +1,28 @@
 #include "pch.h"
 #include "CppUnitTest.h"
-#include "../AudioGenerator/CGenConstant.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace ipgdlib::processor;
 
 namespace UnitTest
 {
-	TEST_CLASS(TCGenConstant)
+	TEST_CLASS(TestCOscillator)
 	{
 	public:
 
 		TEST_METHOD(StackInit)
 		{
+			COscillator<ipgdlib::efpk64Bit> osc(50,
+				new CGenConstant<double>(5)
+			);
 
-			CGenConstant<int> genConstant(10);
-			Assert::AreEqual(genConstant.get(), 10);
-			Assert::AreEqual(genConstant.get(), 10);
+			Assert::AreEqual<double>(osc.get(), 0.0);
+			Assert::AreEqual<double>(osc.get(), 0.1);
+			Assert::AreEqual<double>(osc.get(), 0.2);
+			Assert::AreEqual<double>(osc.get(), 0.3);
+			Assert::AreEqual<double>(osc.get(), 0.4);
+			Assert::AreEqual<double>(osc.get(), 0.0);
 
-			genConstant.setConstant(30);
-			Assert::AreEqual(genConstant.get(), 30);
-			Assert::AreEqual(genConstant.get(), 30);
 		}
 
 		TEST_METHOD(HeapInit)

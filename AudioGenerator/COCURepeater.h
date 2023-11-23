@@ -4,26 +4,26 @@
 
 namespace ipgdlib
 {
-	namespace op
+	namespace processor
 	{
 
 		template <typename TIO>
 		struct COCURepeater :
 			public CAbsOperatorCommonUnary<TIO>
 		{
-			using type = T;
+			using type = TIO;
 			using param_type = pointer_deleter<IOperatorT<TIO>>;
 
 			COCURepeater(size_t repeatCount, param_type source) :
-				CAbsOperatorCommonUnary<TIO>({source.as<IOperator>()}),
+				CAbsOperatorCommonUnary<TIO>(source),
 				m_RepeatCount(repeatCount),m_Count(0)
 			{
 			}
 
-			T get() noexcept final
+			TIO get() noexcept final
 			{
 				if (m_Count == 0)
-					this->m_Value = this->getOperand(0)->get();
+					this->m_Value = this->getOperand().get();
 				this->m_Count++;
 				if (m_Count == this->m_RepeatCount)
 					m_Count = 0;
@@ -31,7 +31,7 @@ namespace ipgdlib
 			}
 
 		private:
-			T							m_Value;
+			TIO							m_Value;
 			size_t						m_RepeatCount;
 			size_t						m_Count;
 		};

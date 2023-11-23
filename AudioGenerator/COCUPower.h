@@ -6,7 +6,7 @@
 namespace ipgdlib
 {
 
-    namespace op
+    namespace processor
     {
 
         template <eFloatingPointKind fpk>

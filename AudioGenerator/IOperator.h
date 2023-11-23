@@ -4,7 +4,7 @@
 
 namespace ipgdlib
 {
-	namespace op
+	namespace processor
 	{
 
 		template <typename T>
@@ -18,12 +18,12 @@ namespace ipgdlib
 			virtual void reset() noexcept = 0;
 			
 			template <typename T>
-			IOperatorT<T>* as()
+			IOperatorT<T> &as()
 			{
-				return dynamic_cast<IOperatorT<T>*>(this);
+				return dynamic_cast<IOperatorT<T>&>(*this);
 			}
 
-			virtual size_t getOperandCount() = 0;
+			virtual size_t getOperandCount() const noexcept = 0;
 		};
 
 	}

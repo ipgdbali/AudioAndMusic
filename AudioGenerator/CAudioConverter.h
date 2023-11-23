@@ -5,7 +5,7 @@
 #include "eFloatingPointKind.h"
 #include "audio.h"
 
-using namespace ipgdlib::op;
+using namespace ipgdlib::processor;
 
 namespace ipgdlib
 {
@@ -13,28 +13,25 @@ namespace ipgdlib
 	{
 
 		template <eSampleFormatKind sfk,eFloatingPointKind fpk>
-		struct CFuncConvAudio :
-			public CAbsOperatorCommonUnary<typename sample_format_trait<sfk>::type>
+		struct CAudioConverter :
+			public CAbsOperator<typename sample_format_trait<sfk>::type>
 		{
 
 			using float_type = TFPKind<fpk>;
 			using ret_type = typename sample_format_trait<sfk>::type;
 			using param_type = pointer_deleter<IOperatorT<TFPKind<fpk>>>;
 			
-			CFuncConvAudio(param_type source) :
-				CAbsOperatorCommonUnary<ret_type>({source.as<IOperator>()}),
-				m_Source(source)
+			CAudioConverter(param_type source) :
+				CAbsOperator<ret_type>({source.as<IOperator>()})
 			{
 			}
 
 			ret_type get() noexcept final
 			{
-				return sample_format_trait<sfk>::convFromFP<fpk>(this->m_Source->get());
+				return sample_format_trait<sfk>::convFromFP<fpk>(
+					this->getOperand(0).as<float_type>().get()
+				);
 			}
-
-		private:
-			IOperatorT<TFPKind<fpk>> *m_Source;
-
 		};
 
 		template <typename T>
@@ -54,14 +51,49 @@ namespace ipgdlib
 					(target > audioOut->getBufferSampleCapacity()) ? audioOut->getBufferSampleCapacity() : target;
 
 				for (size_t li = 0; li < writtenSample; li++)
+				{
 					for (size_t lj = 0; lj < audioOut->getChannelCount(); lj++)
 						pBuffer[li * audioOut->getChannelCount() + lj] = signal->get();
+				}
+
+				audioOut->unlockBuffer(&pBuffer, writtenSample);
+				target -= writtenSample;
+				if (target == 384)
+				{
+					std::cout << "debug" << std::endl;
+				}
+				std::cout << target << std::endl;
+			}
+		}
+
+		template <typename T>
+		void audioAgregate(
+			pointer_deleter<IAudioDeviceOutputT<T>> audioOut,
+			pointer_deleter<IOperatorT<T>> signal,
+			size_t samples
+		)
+		{
+			T* pBuffer;
+
+			size_t target = samples;
+			while (target > 0)
+			{
+				audioOut->lockBuffer(&pBuffer);
+				size_t writtenSample =
+					(target > audioOut->getBufferSampleCapacity()) ? audioOut->getBufferSampleCapacity() : target;
+
+				for (size_t li = 0; li < writtenSample; li++)
+				{
+					for (size_t lj = 0; lj < audioOut->getChannelCount(); lj++)
+					{
+						pBuffer[li * audioOut->getChannelCount() + lj] = signal->get();
+					}
+				}
 
 				audioOut->unlockBuffer(&pBuffer, writtenSample);
 				target -= writtenSample;
 			}
 		}
-
 
 	}
 }

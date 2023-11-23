@@ -4,7 +4,7 @@
 
 namespace ipgdlib
 {
-    namespace op
+    namespace processor
     {
 
         template <typename T>
@@ -21,15 +21,24 @@ namespace ipgdlib
             {
             }
 
-        protected:
-            IOperatorT<T>* getLeftOperand() const noexcept
+            pointer_deleter<IOperatorT<T>> setLeftOperand(pointer_deleter<IOperatorT<T>> leftOperand)
             {
-                return dynamic_cast<IOperatorT<T>*>((IOperator*)this->getOperand(0));
+                return this->setOperand(0, std::move(leftOperand)).as<IOperatorT<T>>();
+            }
+            pointer_deleter<IOperatorT<T>> setRightOperand(pointer_deleter<IOperatorT<T>> rightOperand)
+            {
+                return this->setOperand(1, std::move(rightOperand)).as<IOperatorT<T>>();
             }
 
-            IOperatorT<T>* getRightOperand() const noexcept
+        protected:
+            IOperatorT<T> &getLeftOperand() noexcept
             {
-                return dynamic_cast<IOperatorT<T>*>((IOperator*)this->getOperand(1));
+                return dynamic_cast<IOperatorT<T>&>(this->getOperand(0));
+            }
+
+            IOperatorT<T> &getRightOperand() noexcept
+            {
+                return dynamic_cast<IOperatorT<T>&>(this->getOperand(1));
             }
         };
 

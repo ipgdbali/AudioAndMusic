@@ -4,12 +4,12 @@
 
 namespace ipgdlib
 {
-	namespace op
+	namespace processor
 	{
 
 		template <typename T>
 		struct IOperatorT :
-			public IOperator
+			virtual public IOperator
 		{
 			virtual T get() noexcept = 0;
 
@@ -23,6 +23,9 @@ namespace ipgdlib
 				return type_kind_trait<T>::typeSize();
 			}
 
+		private:
+
+			// Please check whether line below works. 
 			using IOperator::as;
 
 		};

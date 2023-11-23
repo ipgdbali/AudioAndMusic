@@ -8,7 +8,7 @@
 
 namespace ipgdlib
 {
-    namespace op
+    namespace processor
     {
 
         template <eFloatingPointKind fpk>
@@ -29,8 +29,8 @@ namespace ipgdlib
             ret_type get() noexcept final
             {
 
-                float_type osc = this->getLeftOperand()->get();
-                float_type duty = this->getRightOperand()->get();
+                float_type osc = this->getLeftOperand().get();
+                float_type duty = this->getRightOperand().get();
 
                 if (osc < duty)
                     return osc / duty * 2 - 1;

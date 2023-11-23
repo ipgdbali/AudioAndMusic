@@ -84,7 +84,7 @@
     <ClInclude Include="COCMSerializer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CFuncConvAudio.h">
+    <ClInclude Include="CAudioConverter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="audio.h">
@@ -103,6 +103,30 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="COCUMul.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="COscSine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="COscSplitter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IProducer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CAbsProducerVector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CGenNotes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CAbsProducer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IOperatorProducer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CEnvelope.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

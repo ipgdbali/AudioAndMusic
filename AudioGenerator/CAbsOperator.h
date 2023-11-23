@@ -8,7 +8,7 @@
 
 namespace ipgdlib
 {
-    namespace op
+    namespace processor
     {
 
         template <typename TOutput>
@@ -20,39 +20,70 @@ namespace ipgdlib
 
             ~CAbsOperator()
             {
-                for (auto i : this->m_vInput)
-                    i.execute();
-            }
-
-            CAbsOperator(std::initializer_list<pointer_deleter<IOperator>> operands) :
-                m_vInput(std::move(operands))
-            {
+                this->destroy();
             }
 
             CAbsOperator(std::vector<pointer_deleter<IOperator>> operands) :
-                m_vInput(std::move(operands))
+                m_vOperands(std::move(operands))
             {
             }
 
             void reset() noexcept override
             {
-                for (auto& i : this->m_vInput)
-                    i->reset();
+                // reset all operand
+                std::for_each(m_vOperands.begin(), m_vOperands.end(), [](pointer_deleter<IOperator> x) {
+                    x->reset();
+                });
             }
 
-            size_t getOperandCount()
+            size_t getOperandCount() const noexcept final
             {
-                return this->m_vInput.size();
+                // return number of operator's input (operand)
+                return this->m_vOperands.size();
+            }
+
+            std::vector<pointer_deleter<IOperator>> setOperands(std::vector<pointer_deleter<IOperator>> vOperands)
+            {
+                std::vector<pointer_deleter<IOperator>> ret;
+                if (vOperands.size() > 0)
+                {
+                    ret = std::move(this->m_vOperands);
+                    this->m_vOperands = std::move(m_vOperands);
+                }
+                return ret;
+            }
+
+            pointer_deleter<IOperator> setOperand(size_t index, pointer_deleter<IOperator> operand)
+            {
+                pointer_deleter<IOperator> ret;
+
+                ret = std::move(this->m_vOperands[index]);
+                this->m_vOperands[index] = std::move(operand);
+
+                return ret;
             }
 
         protected:
-            IOperator* getOperand(size_t index) const
+
+            IOperator& getOperand(size_t index)
             {
-                return this->m_vInput[index];
+                return *this->m_vOperands[index];
+            }
+
+            std::vector<pointer_deleter<IOperator>> &getOperands()
+            {
+                return this->m_vOperands;
+            }
+
+            void destroy()
+            {
+                std::for_each(m_vOperands.begin(), m_vOperands.end(), [](pointer_deleter<IOperator> x) {
+                    x.destroy();
+                });
             }
 
         private:
-            std::vector<pointer_deleter<IOperator>> m_vInput;
+            std::vector<pointer_deleter<IOperator>> m_vOperands;
         };
 
     }

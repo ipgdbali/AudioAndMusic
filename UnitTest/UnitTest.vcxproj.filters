@@ -21,10 +21,7 @@
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TCOpUnaryNegate.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TCOpBinaryMul.cpp">
+    <ClCompile Include="TCOscillator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

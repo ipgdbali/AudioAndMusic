@@ -4,7 +4,7 @@
 
 namespace ipgdlib
 {
-    namespace op
+    namespace processor
     {
         template <typename T>
         struct COCUNegate :
@@ -17,7 +17,7 @@ namespace ipgdlib
 
             T get() noexcept final
             {
-                return -this->getOperand()->get();
+                return -this->getOperand().get();
             }
 
         };

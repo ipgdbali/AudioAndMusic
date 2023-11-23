@@ -4,26 +4,31 @@
 
 namespace ipgdlib
 {
-    namespace op
+    namespace processor
     {
 
         template <typename TIO>
         struct CAbsOperatorCommonUnary :
-            public CAbsOperatorCommonUnary<TIO>
+            public CAbsOperator<TIO>
         {
 
             using param_type = pointer_deleter<IOperatorT<TIO>>;
 
             CAbsOperatorCommonUnary(param_type operand) :
-                CAbsOperatorCommonUnary<TIO>({ operand.as<IOperator>()})
+                CAbsOperator<TIO>({ operand.as<IOperator>()})
             {
             }
 
-        protected:
-            IOperatorT<TIO>* getOperand() const noexcept
+            pointer_deleter<IOperatorT<TIO>> setOperand(pointer_deleter<IOperatorT<TIO>> operand)
             {
-                return dynamic_cast<IOperatorT<TIO>*>(
-                    (IOperator*)CAbsOperatorCommonUnary<TIO>::getOperand(0)
+                return CAbsOperator<TIO>::setOperand(0, std::move((IOperator*)operand)).as<IOperatorT<TIO>>();
+            }
+
+        protected:
+            IOperatorT<TIO> &getOperand() noexcept
+            {
+                return dynamic_cast<IOperatorT<TIO>&>(
+                    CAbsOperator<TIO>::getOperand(0)
                 );
             }
         };

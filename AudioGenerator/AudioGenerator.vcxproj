@@ -134,7 +134,10 @@
     <ClInclude Include="CAbsOperatorCommonUnary.h" />
     <ClInclude Include="CAbsOperatorGenerator.h" />
     <ClInclude Include="CAbsOperator.h" />
-    <ClInclude Include="CFuncConvAudio.h" />
+    <ClInclude Include="CAbsProducer.h" />
+    <ClInclude Include="CAbsProducerVector.h" />
+    <ClInclude Include="CAudioConverter.h" />
+    <ClInclude Include="CGenNotes.h" />
     <ClInclude Include="COCBPower.h" />
     <ClInclude Include="COCUAdd.h" />
     <ClInclude Include="COCUCosine.h" />
@@ -152,8 +155,13 @@
     <ClInclude Include="COscillator.h" />
     <ClInclude Include="COscPWM.h" />
     <ClInclude Include="COCUSine.h" />
+    <ClInclude Include="COscSine.h" />
     <ClInclude Include="COscTriangle.h" />
+    <ClInclude Include="COscSplitter.h" />
+    <ClInclude Include="CEnvelope.h" />
+    <ClInclude Include="IOperatorProducer.h" />
     <ClInclude Include="IOperatorT.h" />
+    <ClInclude Include="IProducer.h" />
     <ClInclude Include="pointer_deleter.h" />
     <ClInclude Include="eFloatingPointKind.h" />
     <ClInclude Include="IOperator.h" />

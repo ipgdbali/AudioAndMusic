@@ -1,5 +1,7 @@
 #pragma once
 
+#include <type_traits>
+
 namespace ipgdlib
 {
 	enum eFloatingPointKind { efpk32Bit,efpk64Bit };

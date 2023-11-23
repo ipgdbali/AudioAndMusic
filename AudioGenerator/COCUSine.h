@@ -5,7 +5,7 @@
 
 namespace ipgdlib
 {
-    namespace op
+    namespace processor
     {
 
         template <eFloatingPointKind fpk>
@@ -16,7 +16,7 @@ namespace ipgdlib
             using ret_type = float_type;
 
             COCUSine(pointer_deleter<IOperatorT<float_type>> opOsc) :
-                CAbsOperatorCommonUnary<float_type>({ opOsc.as<IOperator>() })
+                CAbsOperatorCommonUnary<float_type>(opOsc)
             {
             }
 

@@ -6,44 +6,44 @@
 
 namespace ipgdlib
 {
-	namespace op
+	namespace processor
 	{
 
-		template <typename T>
+		template <typename TIO>
 		struct COCMSerializer :
-			public CAbsOperatorCommon<T>
+			public CAbsOperatorCommon<TIO>
 		{
-			using type = T;
-			using param_type = pointer_deleter<IOperatorT<T>>;
+			using type = TIO;
+			using param_type = pointer_deleter<IOperatorT<TIO>>;
 
 			COCMSerializer(std::initializer_list<param_type> sources) :
-				CAbsOperatorCommon<T>(sources),
+				CAbsOperatorCommon<TIO>(sources),
 				m_CurrIndex(sources.size() - 1)
 			{
 			}
 
 			COCMSerializer(std::vector<param_type> sources) :
-				CAbsOperatorCommonUnary<T>(sources),
+				CAbsOperatorCommonUnary<TIO>(sources),
 				m_CurrIndex(sources.size()-1)
 			{
 			}
 
 			void reset() noexcept final
 			{
-				CAbsOperatorCommonUnary<T>::reset();
+				CAbsOperatorCommon<TIO>::reset();
 				m_CurrIndex = this->getOperandCount() - 1;
 			}
 
-			T get() noexcept final
+			TIO get() noexcept final
 			{
 				m_CurrIndex++;
 				if (m_CurrIndex == this->getOperandCount())
 					m_CurrIndex = 0;
-				return this->getOperand(m_CurrIndex)->get();
+				return this->getOperand(m_CurrIndex).get();
 			}
 
 		private:
-			size_t										m_CurrIndex;
+			size_t	m_CurrIndex;
 		};
 	}
 }

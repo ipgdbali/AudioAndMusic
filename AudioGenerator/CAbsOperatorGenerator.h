@@ -4,7 +4,7 @@
 
 namespace ipgdlib
 {
-    namespace op
+    namespace processor
     {
 
         /// <summary>
@@ -16,7 +16,7 @@ namespace ipgdlib
             public IOperatorT<TOutput>
         {
 
-            size_t getOperandCount()
+            size_t getOperandCount() const noexcept final
             {
                 return 0;
             }

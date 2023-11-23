@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstdio>
 #include <utility>
 #include "CAbsOperatorCommonUnary.h"
 #include "eFloatingPointKind.h"
@@ -7,7 +8,7 @@
 namespace ipgdlib
 {
 
-    namespace op
+    namespace processor
     {
 
         template <eFloatingPointKind fpk>
@@ -15,9 +16,9 @@ namespace ipgdlib
             public CAbsOperatorCommonUnary<TFPKind<fpk>>
         {
             using T = TFPKind<fpk>;
-            using param_type = pointer_deleter<IOperatorT<TFPKind<fpk>>>;
+            using param_type = pointer_deleter<IOperatorT<T>>;
 
-            COscillator(size_t sampleRate,param_type freq) :
+            z(size_t sampleRate,param_type freq) :
                 CAbsOperatorCommonUnary<T>(freq),
                 m_SampleRate(sampleRate), 
                 m_Phase(0),m_Freq(freq)

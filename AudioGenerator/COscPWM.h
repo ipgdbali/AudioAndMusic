@@ -4,11 +4,10 @@
 #include "IOperatorT.h"
 #include "eFloatingPointKind.h"
 #include "pointer_deleter.h"
-#include <utility>
 
 namespace ipgdlib
 {
-    namespace op
+    namespace processor
     {
 
         template <eFloatingPointKind fpk>
@@ -26,7 +25,7 @@ namespace ipgdlib
 
             ret_type get() noexcept final
             {
-                if (this->getLeftOperand()->get() < this->getRightOperand()->get())
+                if (this->getLeftOperand().get() < this->getRightOperand().get())
                     return 1.0;
                 else
                     return -1.0;

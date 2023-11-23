@@ -1,24 +1,28 @@
 #pragma once
 
+#include "eFloatingPointKind.h"
 #include "CAbsOperatorCommonBinary.h"
+#include <cmath>
 
 namespace ipgdlib
 {
-    namespace op
+    namespace processor
     {
 
-        template <typename T>
+        template <eFloatingPointKind fpk>
         struct COCBPower :
-            public CAbsOperatorCommonBinary<T>
+            public CAbsOperatorCommonBinary<TFPKind<fpk>>
         {
-            COCBAdd(pointer_deleter<IOperatorT<T>> base, pointer_deleter<IOperatorT<T>> exp) :
-                CAbsOperatorCommonBinary<T>(base, exp)
+            using float_type = TFPKind<fpk>;
+
+            COCBPower(pointer_deleter<IOperatorT<float_type>> base, pointer_deleter<IOperatorT<float_type>> exp) :
+                CAbsOperatorCommonBinary<float_type>(base, exp)
             {
             }
 
-            T get() noexcept final
+            float_type get() noexcept final
             {
-                return this->getLeftOperand()->get() + this->getRightOperand()->get();
+                return std::pow(this->getLeftOperand()->get(),this->getRightOperand()->get());
             }
 
         };

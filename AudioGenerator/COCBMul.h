@@ -4,7 +4,7 @@
 
 namespace ipgdlib
 {
-    namespace op
+    namespace processor
     {
 
         template <typename T>
@@ -19,7 +19,7 @@ namespace ipgdlib
 
             T get() noexcept final
             {
-                return this->getLeftOperand()->get() * this->getRightOperand()->get();
+                return this->getLeftOperand().get() * this->getRightOperand().get();
             }
 
         };

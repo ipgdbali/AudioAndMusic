@@ -9,7 +9,7 @@ namespace ipgdlib
 	template <typename T>
 	struct pointer_deleter
 	{
-		void execute()
+		void destroy()
 		{
 			if (this->m_Pointer != nullptr && this->m_bDeleted == true)
 			{
@@ -36,7 +36,7 @@ namespace ipgdlib
 			this->m_bDeleted = ref.m_bDeleted;
 		}
 
-		pointer_deleter(pointer_deleter<T>&& ref) :
+		pointer_deleter(pointer_deleter<T> && ref) :
 			m_Pointer(ref.m_Pointer), m_bDeleted(ref.m_bDeleted)
 		{
 			ref.m_Pointer = nullptr;

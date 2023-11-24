@@ -30,7 +30,6 @@ namespace ipgdlib
                 return this->setOperand(1, std::move(rightOperand)).as<IOperatorT<T>>();
             }
 
-        protected:
             IOperatorT<T> &getLeftOperand() noexcept
             {
                 return dynamic_cast<IOperatorT<T>&>(this->getOperand(0));

@@ -12,13 +12,13 @@ namespace ipgdlib
     {
 
         template <eFloatingPointKind fpk>
-        struct COscillator :
+        struct COscFreq :
             public CAbsOperatorCommonUnary<TFPKind<fpk>>
         {
             using T = TFPKind<fpk>;
             using param_type = pointer_deleter<IOperatorT<T>>;
 
-            z(size_t sampleRate,param_type freq) :
+            COscFreq(size_t sampleRate,param_type freq) :
                 CAbsOperatorCommonUnary<T>(freq),
                 m_SampleRate(sampleRate), 
                 m_Phase(0),m_Freq(freq)
@@ -41,7 +41,6 @@ namespace ipgdlib
                 T ret(this->m_Phase);
 
                 this->m_Phase += (this->m_Freq->get() / this->m_SampleRate);
-
                 if (this->m_Phase >= 1.0)
                     this->m_Phase = this->m_Phase - (int)this->m_Phase;
 

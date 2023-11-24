@@ -74,6 +74,13 @@ namespace ipgdlib
                 return CAbsOperator<TIO>::setOperand(operand.as<IOperator>()).as<IOperatorT<TIO>>();
             }
 
+            IOperatorT<TIO>& getOperand(size_t index)
+            {
+                return dynamic_cast<IOperatorT<TIO>&>(
+                    CAbsOperator<TIO>::getOperand(index)
+                    );
+            }
+
         protected:
 
             /// <summary>
@@ -83,13 +90,6 @@ namespace ipgdlib
             CAbsOperatorCommon(std::vector<pointer_deleter<IOperator>> operands) :
                 CAbsOperator(std::move(operands))
             {
-            }
-
-            IOperatorT<TIO> &getOperand(size_t index)
-            {
-                return dynamic_cast<IOperatorT<TIO>&>(
-                    CAbsOperator<TIO>::getOperand(index)
-                );
             }
 
         };

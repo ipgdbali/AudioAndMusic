@@ -58,11 +58,6 @@ namespace ipgdlib
 
 				audioOut->unlockBuffer(&pBuffer, writtenSample);
 				target -= writtenSample;
-				if (target == 384)
-				{
-					std::cout << "debug" << std::endl;
-				}
-				std::cout << target << std::endl;
 			}
 		}
 

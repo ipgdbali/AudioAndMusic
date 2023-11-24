@@ -4,7 +4,7 @@
 #include "CGenNotes.h"
 #include "CEnvelope.h"
 
-#include "COscillator.h"
+#include "COscFreq.h"
 #include "COscSine.h"
 #include "COscPWM.h"
 #include "COscTriangle.h"
@@ -48,7 +48,7 @@ void waveform()
 	auto pFileOut = new CWaveFileWriter<SAMPLE_FORMAT_KIND>("waveform.wav", esrk48kHz, 2);
 
 	auto pFrequency = new CGenConstant<FLOATING_POINT_TYPE>(440.0);
-	auto pOscilator = new COscillator<FLOATING_POINT_KIND>(48000, pFrequency);
+	auto pOscilator = new COscFreq<FLOATING_POINT_KIND>(48000, pFrequency);
 	auto pSignal = new COscTriangle<FLOATING_POINT_KIND>(*pOscilator,
 		new CGenConstant<FLOATING_POINT_TYPE>(0.5));
 	auto pStereoSignal = new COCURepeater<FLOATING_POINT_TYPE>(2, *pSignal);
@@ -129,7 +129,7 @@ void notes()
 	auto pFileOut = new CWaveFileWriter<SAMPLE_FORMAT_KIND>("notes.wav", esrk48kHz, 2);
 
 	auto pFrequency = new CGenConstant<FLOATING_POINT_TYPE>(freqMap[noteSharp2IdxFreqMap["C4"]]);
-	auto pOscilator = new COscillator<FLOATING_POINT_KIND>(48000, pFrequency);
+	auto pOscilator = new COscFreq<FLOATING_POINT_KIND>(48000, pFrequency);
 	auto pSignal = new COscPWM<FLOATING_POINT_KIND>(*pOscilator,
 		new CGenConstant<FLOATING_POINT_TYPE>(0.25));
 	auto pStereoSignal = new COCURepeater<FLOATING_POINT_TYPE>(2, *pSignal);
@@ -230,7 +230,7 @@ void note_load()
 	CNotes notes("lagu1.notes");
 	CGenNotes<efpk64Bit> gNotes(48000,120,notes);
 
-	auto pOscilator = new COscillator<FLOATING_POINT_KIND>(48000, gNotes.getOpNoteFreq());
+	auto pOscilator = new COscFreq<FLOATING_POINT_KIND>(48000, gNotes.getOpNoteFreq());
 	auto pSignal = new COscPWM<FLOATING_POINT_KIND>(*pOscilator,
 		new CGenConstant<FLOATING_POINT_TYPE>(0.5));
 	auto pStereoSignal = new COCURepeater<FLOATING_POINT_TYPE>(2, *pSignal);

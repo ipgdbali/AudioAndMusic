@@ -24,7 +24,6 @@ namespace ipgdlib
                 return CAbsOperator<TIO>::setOperand(0, std::move((IOperator*)operand)).as<IOperatorT<TIO>>();
             }
 
-        protected:
             IOperatorT<TIO> &getOperand() noexcept
             {
                 return dynamic_cast<IOperatorT<TIO>&>(

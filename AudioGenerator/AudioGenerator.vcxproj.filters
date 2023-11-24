@@ -66,7 +66,7 @@
     <ClInclude Include="COCUExponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="COscillator.h">
+    <ClInclude Include="COscFreq.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="COCUSine.h">
@@ -127,6 +127,30 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CEnvelope.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="COscNoise.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="COCUInvert.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="COscNormalize.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="COscUnNormalize.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="COscPower.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="COscExponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CGenFiniteConstant.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="function.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

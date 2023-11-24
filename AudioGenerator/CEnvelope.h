@@ -4,6 +4,7 @@
 #include "eFloatingPointKind.h"
 #include "CGenNotes.h"
 #include <functional>
+#include <array>
 
 namespace ipgdlib
 {
@@ -214,7 +215,9 @@ namespace ipgdlib
 						break;
 
 					case eEnvelopeState::DECAY:		
-						ret = 1.0  - (1.0 - this->m_ADSR.lvlSustain) * this->m_Funcs[1]((float_type)this->m_Ticks / this->m_ADSR.tmDecay);
+						ret = this->m_ADSR.lvlSustain + 
+							this->m_Funcs[1](1.0 - (float_type)this->m_Ticks / this->m_ADSR.tmDecay) * 
+							(1.0 - this->m_ADSR.lvlSustain);
 						break;
 
 					case eEnvelopeState::SUSTAIN:	
@@ -234,6 +237,16 @@ namespace ipgdlib
 			const ADSR<size_t,float_type>& getADSR() const noexcept
 			{
 				return this->m_ADSR;
+			}
+
+			void setADSR(ADSR<size_t, float_type> adsr)
+			{
+				this->m_ADSR = std::move(adsr);
+			}
+
+			void setFunctions(std::array<std::function<float_type(float_type)>, 3 > func)
+			{
+				this->m_Funcs = std::move(func);
 			}
 
 		protected:

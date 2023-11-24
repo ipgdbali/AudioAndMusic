@@ -28,7 +28,7 @@ namespace ipgdlib
 
             T get() noexcept final
             {
-                return this->m_Base * this->getOperand()->get();
+                return this->m_Base * this->getOperand().get();
             }
 
         private:

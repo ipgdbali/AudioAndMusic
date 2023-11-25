@@ -144,6 +144,7 @@
     <ClInclude Include="COCUCosine.h" />
     <ClInclude Include="COCUInvert.h" />
     <ClInclude Include="COCUMul.h" />
+    <ClInclude Include="COCUOffsetScale.h" />
     <ClInclude Include="COCURepeater.h" />
     <ClInclude Include="COCMSerializer.h" />
     <ClInclude Include="CGenConstant.h" />
@@ -164,7 +165,7 @@
     <ClInclude Include="COscSine.h" />
     <ClInclude Include="COscTriangle.h" />
     <ClInclude Include="COscSplitter.h" />
-    <ClInclude Include="CEnvelope.h" />
+    <ClInclude Include="CEnvelopeADSR.h" />
     <ClInclude Include="COscUnNormalize.h" />
     <ClInclude Include="function.h" />
     <ClInclude Include="IOperatorProducer.h" />

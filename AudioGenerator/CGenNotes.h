@@ -5,7 +5,7 @@
 #include "eFloatingPointKind.h"
 #include "audio.h"
 
-using ipgdlib::audio::CNotes;
+using ipgdlib::audio::CNoteLane;
 
 namespace ipgdlib
 {
@@ -24,7 +24,7 @@ namespace ipgdlib
             {
             }
 
-            CGenNotes(size_t sampleRate,float_type tempo,CNotes notes) :
+            CGenNotes(size_t sampleRate,float_type tempo,CNoteLane notes) :
                 CAbsProducerVector({
                     new COperatorProducerT<float_type>(this,this->m_CurrFreq),
                     new COperatorProducerT<eGateKind>(this,this->m_CurrGate)
@@ -62,6 +62,7 @@ namespace ipgdlib
                     this->m_CurrState = ensNote;
                     this->m_CurrStateLength = this->m_SamplePerBeat *
                         this->m_CurrNote.length.mul / this->m_CurrNote.length.div;
+                    this->m_NoteLength = this->m_CurrStateLength * this->m_CurrNote.duration;
                     this->m_CurrFreq = audio::freqMap[this->m_CurrNote.note];
                     this->m_CurrGate = egkOn;
                 }
@@ -90,6 +91,11 @@ namespace ipgdlib
                         this->m_CurrGate = egkOn;
 
                     this->m_CurrStatePosition++;
+                    if (this->m_CurrState == ensNote && this->m_CurrStatePosition == this->m_NoteLength)
+                    {
+                        this->m_CurrGate = egkOff;
+                    }
+
                     if (this->m_CurrStatePosition == this->m_CurrStateLength)
                     {
                         // change state
@@ -98,7 +104,7 @@ namespace ipgdlib
                             this->m_CurrState = ensNote;
                             this->m_CurrStateLength = this->m_SamplePerBeat *
                                 this->m_CurrNote.length.mul / this->m_CurrNote.length.div;
-
+                            this->m_NoteLength = this->m_CurrStateLength * this->m_CurrNote.duration;
                             this->m_CurrFreq = audio::freqMap[this->m_CurrNote.note];
                             this->m_CurrGate = egkOn;
                         }
@@ -120,8 +126,12 @@ namespace ipgdlib
                                     this->m_CurrState = ensNote;
                                     this->m_CurrStateLength = this->m_SamplePerBeat *
                                         this->m_CurrNote.length.mul / this->m_CurrNote.length.div;
+                                    this->m_NoteLength = this->m_CurrStateLength * this->m_CurrNote.duration;
                                     this->m_CurrFreq = audio::freqMap[this->m_CurrNote.note];
-                                    this->m_CurrGate = egkChangeFreq;
+                                    if (this->m_CurrGate == egkOn)
+                                        this->m_CurrGate = egkChangeFreq;
+                                    else
+                                        this->m_CurrGate = egkOn;
                                 }
                                 else
                                 {
@@ -146,18 +156,20 @@ namespace ipgdlib
         private:
             size_t                  m_SampleRate;
             float_type              m_Tempo;
-            CNotes                  m_Notes;
+            CNoteLane                  m_Notes;
 
             float_type              m_SamplePerBeat;
 
             size_t                  m_CurrNoteIndex;
-            CNotes::note_t          m_CurrNote;
+            CNoteLane::note_t       m_CurrNote;
 
             bool                    m_bFinished;
 
             eNoteState              m_CurrState;
             size_t                  m_CurrStateLength;
             size_t                  m_CurrStatePosition;
+
+            size_t                  m_NoteLength;
 
             float_type              m_CurrFreq;
             eGateKind               m_CurrGate;

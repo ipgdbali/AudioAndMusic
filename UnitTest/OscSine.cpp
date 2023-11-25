@@ -11,12 +11,12 @@ namespace Oscillator
 	public:
 		TEST_METHOD(Basic)
 		{
-			auto pFileOut = new CWaveFileWriter<SAMPLE_FORMAT_KIND>("oscsine-basic.wav", esrk48kHz, 1);
+			auto pFileOut = new CWaveFileWriter<SF_KIND>("oscsine-basic.wav", esrk48kHz, 1);
 
-			COscSine<FLOATING_POINT_KIND> sigSine(
-				new COscFreq<FLOATING_POINT_KIND>(SAMPLE_RATE, new CGenConstant<FLOATING_POINT_TYPE>(440.0))
+			COscSine<FP_KIND> sigSine(
+				new COscFreq<FP_KIND>(SAMPLE_RATE, new CGenConstant<FP_TYPE>(440.0))
 			);
-			CAudioConverter<SAMPLE_FORMAT_KIND, FLOATING_POINT_KIND> genAudio(sigSine);
+			CAudioConverter<SF_KIND, FP_KIND> genAudio(sigSine);
 			audioAgregateMillis<SAMPLE_FORMAT_TYPE>(pFileOut, genAudio, 1000);
 
 			delete pFileOut;
@@ -24,25 +24,25 @@ namespace Oscillator
 
 		TEST_METHOD(AMSine)
 		{
-			auto pFileOut = new CWaveFileWriter<SAMPLE_FORMAT_KIND>("oscsine-amsine.wav", esrk48kHz, 1);
+			auto pFileOut = new CWaveFileWriter<SF_KIND>("oscsine-amsine.wav", esrk48kHz, 1);
 
-			COscSine<FLOATING_POINT_KIND> sigSine(
-				new COscFreq<FLOATING_POINT_KIND>(SAMPLE_RATE, new CGenConstant<FLOATING_POINT_TYPE>(440.0))
+			COscSine<FP_KIND> sigSine(
+				new COscFreq<FP_KIND>(SAMPLE_RATE, new CGenConstant<FP_TYPE>(440.0))
 			);
 
-			COCBMul<FLOATING_POINT_TYPE> AM(
+			COCBMul<FP_TYPE> AM(
 				sigSine,
-				new COCUCustom<FLOATING_POINT_TYPE>(
-					[](FLOATING_POINT_TYPE x) {
+				new COCUCustom<FP_TYPE>(
+					[](FP_TYPE x) {
 						return 0.8 + x/5.0;
 					},
-					new COscSine<FLOATING_POINT_KIND>(
-						new COscFreq<FLOATING_POINT_KIND>(SAMPLE_RATE, new CGenConstant<FLOATING_POINT_TYPE>(8.0))
+					new COscSine<FP_KIND>(
+						new COscFreq<FP_KIND>(SAMPLE_RATE, new CGenConstant<FP_TYPE>(8.0))
 					)
 				)
 			);
 
-			CAudioConverter<SAMPLE_FORMAT_KIND, FLOATING_POINT_KIND> genAudio(AM);
+			CAudioConverter<SF_KIND, FP_KIND> genAudio(AM);
 			audioAgregateMillis<SAMPLE_FORMAT_TYPE>(pFileOut, genAudio, 5000);
 
 			delete pFileOut;
@@ -50,15 +50,15 @@ namespace Oscillator
 
 		TEST_METHOD(AMSelector)
 		{
-			auto pFileOut = new CWaveFileWriter<SAMPLE_FORMAT_KIND>("oscsine-amselector.wav", esrk48kHz, 1);
+			auto pFileOut = new CWaveFileWriter<SF_KIND>("oscsine-amselector.wav", esrk48kHz, 1);
 
-			COscSine<FLOATING_POINT_KIND> sigSine(
-				new COscFreq<FLOATING_POINT_KIND>(SAMPLE_RATE, new CGenConstant<FLOATING_POINT_TYPE>(440.0))
+			COscSine<FP_KIND> sigSine(
+				new COscFreq<FP_KIND>(SAMPLE_RATE, new CGenConstant<FP_TYPE>(440.0))
 			);
 
-			COCBMul<FLOATING_POINT_TYPE> AM(
+			COCBMul<FP_TYPE> AM(
 				sigSine,
-				new CGenFiniteConstant<FLOATING_POINT_TYPE>(
+				new CGenFiniteConstant<FP_TYPE>(
 					{
 						{10000,0.0},
 						{10000,0.2},
@@ -70,7 +70,7 @@ namespace Oscillator
 				)
 			);
 
-			CAudioConverter<SAMPLE_FORMAT_KIND, FLOATING_POINT_KIND> genAudio(AM);
+			CAudioConverter<SF_KIND, FP_KIND> genAudio(AM);
 			audioAgregateMillis<SAMPLE_FORMAT_TYPE>(pFileOut, genAudio, 5000);
 
 			delete pFileOut;
@@ -78,15 +78,15 @@ namespace Oscillator
 
 		TEST_METHOD(AMEnvelope)
 		{
-			auto pFileOut = new CWaveFileWriter<SAMPLE_FORMAT_KIND>("oscsine-amenvelope.wav", esrk48kHz, 1);
+			auto pFileOut = new CWaveFileWriter<SF_KIND>("oscsine-amenvelope.wav", esrk48kHz, 1);
 
-			COscSine<FLOATING_POINT_KIND> sigSine(
-				new COscFreq<FLOATING_POINT_KIND>(SAMPLE_RATE, new CGenConstant<FLOATING_POINT_TYPE>(440.0))
+			COscSine<FP_KIND> sigSine(
+				new COscFreq<FP_KIND>(SAMPLE_RATE, new CGenConstant<FP_TYPE>(440.0))
 			);
 
-			COCBMul<FLOATING_POINT_TYPE> AM(
+			COCBMul<FP_TYPE> AM(
 				sigSine,
-				new CEnvelope<FLOATING_POINT_KIND>(
+				new CEnvelopeADSR<FP_KIND>(
 					{10000,10000,0.8,10000},
 					new CGenFiniteConstant<eGateKind>({
 						{30000,egkOn},
@@ -96,34 +96,34 @@ namespace Oscillator
 					})
 				)
 			);
-			CAudioConverter<SAMPLE_FORMAT_KIND, FLOATING_POINT_KIND> genAudio(AM);
+			CAudioConverter<SF_KIND, FP_KIND> genAudio(AM);
 			
 			// agregate 2 sound
 			audioAgregate<SAMPLE_FORMAT_TYPE>(pFileOut, genAudio, 90000);
 
 			//change linear to power
-			dynamic_cast<CEnvelope<FLOATING_POINT_KIND>&>(AM.getRightOperand()).setFunctions({
-				function::fnPower<FLOATING_POINT_KIND>(2.0),
-				function::fnPower<FLOATING_POINT_KIND>(2.0),
-				function::fnPower<FLOATING_POINT_KIND>(2.0),
+			dynamic_cast<CEnvelopeADSR<FP_KIND>&>(AM.getRightOperand()).setFunctions({
+				function::fnPower<FP_KIND>(2.0),
+				function::fnPower<FP_KIND>(2.0),
+				function::fnPower<FP_KIND>(2.0),
 			});
 			audioAgregate<SAMPLE_FORMAT_TYPE>(pFileOut, genAudio, 90000);
 			
 			// change back to linear
-			dynamic_cast<CEnvelope<FLOATING_POINT_KIND>&>(AM.getRightOperand()).setFunctions({
-				function::fnLinear<FLOATING_POINT_TYPE>,
-				function::fnLinear<FLOATING_POINT_TYPE>,
-				function::fnLinear<FLOATING_POINT_TYPE>,
+			dynamic_cast<CEnvelopeADSR<FP_KIND>&>(AM.getRightOperand()).setFunctions({
+				function::fnLinear<FP_TYPE>,
+				function::fnLinear<FP_TYPE>,
+				function::fnLinear<FP_TYPE>,
 			});
-			dynamic_cast<CEnvelope<FLOATING_POINT_KIND>&>(AM.getRightOperand()).setADSR(
+			dynamic_cast<CEnvelopeADSR<FP_KIND>&>(AM.getRightOperand()).setADSR(
 				{ 10000,20000,0,0 }
 			);
 			audioAgregate<SAMPLE_FORMAT_TYPE>(pFileOut, genAudio, 90000);
 
-			dynamic_cast<CEnvelope<FLOATING_POINT_KIND>&>(AM.getRightOperand()).setFunctions({
-				function::fnPower<FLOATING_POINT_KIND>(2.0),
-				function::fnPower<FLOATING_POINT_KIND>(2.0),
-				function::fnPower<FLOATING_POINT_KIND>(2.0),
+			dynamic_cast<CEnvelopeADSR<FP_KIND>&>(AM.getRightOperand()).setFunctions({
+				function::fnPower<FP_KIND>(2.0),
+				function::fnPower<FP_KIND>(2.0),
+				function::fnPower<FP_KIND>(2.0),
 			});
 			audioAgregate<SAMPLE_FORMAT_TYPE>(pFileOut, genAudio, 90000);
 
@@ -132,76 +132,138 @@ namespace Oscillator
 
 		TEST_METHOD(FMLinearUp)
 		{
-			auto pFileOut = new CWaveFileWriter<SAMPLE_FORMAT_KIND>("oscsine-fmlinearup.wav", esrk48kHz, 1);
+			auto pFileOut = new CWaveFileWriter<SF_KIND>("oscsine-fmlinearup.wav", esrk48kHz, 1);
 
-			COscSine<FLOATING_POINT_KIND> sigSine(
-				new COscFreq<FLOATING_POINT_KIND>(
+			COscSine<FP_KIND> sigSine(
+				new COscFreq<FP_KIND>(
 					SAMPLE_RATE,
-					new COCUCustom<FLOATING_POINT_TYPE>(
-						[](FLOATING_POINT_TYPE x) {
-							return 440 + 200 * x;
-						},
-						new COscFreq<FLOATING_POINT_KIND>(
+					new COCUOffsetScale<FP_KIND>(
+						440.0,200.0,ipgdlib::function::fnLinear<FP_TYPE>,
+						new COscFreq<FP_KIND>(
 							SAMPLE_RATE,
-							new CGenConstant<FLOATING_POINT_TYPE>(2.0)
+							new CGenConstant<FP_TYPE>(2.0)
 						)
 					)
 				)
 			);
-			CAudioConverter<SAMPLE_FORMAT_KIND, FLOATING_POINT_KIND> genAudio(sigSine);
-			audioAgregateMillis<SAMPLE_FORMAT_TYPE>(pFileOut, genAudio, 10000);
+			CAudioConverter<SF_KIND, FP_KIND> genAudio(sigSine);
+			audioAgregateMillis<SAMPLE_FORMAT_TYPE>(pFileOut, genAudio, 5000);
 
 			delete pFileOut;
 		}
 		TEST_METHOD(FMLinearDown)
 		{
-			auto pFileOut = new CWaveFileWriter<SAMPLE_FORMAT_KIND>("oscsine-fmlineardown.wav", esrk48kHz, 1);
+			auto pFileOut = new CWaveFileWriter<SF_KIND>("oscsine-fmlineardown.wav", esrk48kHz, 1);
 
-			COscSine<FLOATING_POINT_KIND> sigSine(
-				new COscFreq<FLOATING_POINT_KIND>(
+			COscSine<FP_KIND> sigSine(
+				new COscFreq<FP_KIND>(
 					SAMPLE_RATE,
-					new COCUCustom<FLOATING_POINT_TYPE>(
-						[](FLOATING_POINT_TYPE x) {
-							return 640 - 200 * x;
-						},
-						new COscFreq<FLOATING_POINT_KIND>(
+					new COCUOffsetScale<FP_KIND>(
+						640.0, -200.0,
+						new COscFreq<FP_KIND>(
 							SAMPLE_RATE,
-							new CGenConstant<FLOATING_POINT_TYPE>(2.0)
+							new CGenConstant<FP_TYPE>(2.0)
 						)
 					)
 				)
 			);
-			CAudioConverter<SAMPLE_FORMAT_KIND, FLOATING_POINT_KIND> genAudio(sigSine);
-			audioAgregateMillis<SAMPLE_FORMAT_TYPE>(pFileOut, genAudio, 10000);
+			CAudioConverter<SF_KIND, FP_KIND> genAudio(sigSine);
+			audioAgregateMillis<SAMPLE_FORMAT_TYPE>(pFileOut, genAudio, 5000);
 
 			delete pFileOut;
 		}
 
 		TEST_METHOD(FMSine)
 		{
-			auto pFileOut = new CWaveFileWriter<SAMPLE_FORMAT_KIND>("oscsine-fmsine.wav", esrk48kHz, 1);
+			auto pFileOut = new CWaveFileWriter<SF_KIND>("oscsine-fmsine.wav", esrk48kHz, 1);
 
-			COscSine<FLOATING_POINT_KIND> sigSine(
-				new COscFreq<FLOATING_POINT_KIND>(
+			COscSine<FP_KIND> sigSine(
+				new COscFreq<FP_KIND>(
 					SAMPLE_RATE,
-					new COCUCustom<FLOATING_POINT_TYPE>(
-						[](FLOATING_POINT_TYPE x) {
-							return 440 - 20 * x;
-						},
-						new COscSine<FLOATING_POINT_KIND>(
-							new COscFreq<FLOATING_POINT_KIND>(
+					new COCUOffsetScale<FP_KIND>(
+						440.0, 20.0,ipgdlib::function::fnLinear<FP_TYPE>,
+						new COscSine<FP_KIND>(
+							new COscFreq<FP_KIND>(
 								SAMPLE_RATE,
-								new CGenConstant<FLOATING_POINT_TYPE>(16.0)
+								new CGenConstant<FP_TYPE>(2)
 							)
 						)
 					)
 				)
 			);
-			CAudioConverter<SAMPLE_FORMAT_KIND, FLOATING_POINT_KIND> genAudio(sigSine);
+
+			CAudioConverter<SF_KIND, FP_KIND> genAudio(sigSine);
 			audioAgregateMillis<SAMPLE_FORMAT_TYPE>(pFileOut, genAudio, 10000);
 
 			delete pFileOut;
 		}
+
+		TEST_METHOD(Notes)
+		{
+			auto pFileOut = new CWaveFileWriter<SF_KIND>("oscsine-notes.wav", esrk48kHz, 1);
+			
+			CNoteLane track1({
+				{note2IdxFreqMap["E5"],{1,4}},
+				{note2IdxFreqMap["D#5"],{1,4}},
+				{note2IdxFreqMap["E5"],{1,4}},
+				{note2IdxFreqMap["D#5"],{1,4}},
+				{note2IdxFreqMap["E5"],{1,4}},
+				{note2IdxFreqMap["B4"],{1,4}},
+				{note2IdxFreqMap["D5"],{1,4}},
+				{note2IdxFreqMap["C5"],{1,4}},
+				{note2IdxFreqMap["A4"],{1,2}},
+				
+				{note2IdxFreqMap["E4"],{1,4},{1,4}},
+				{note2IdxFreqMap["G#4"],{1,4}},
+				{note2IdxFreqMap["A4"],{1,4}},
+				{note2IdxFreqMap["B4"],{1,2}},
+
+				{note2IdxFreqMap["G#4"],{1,4},{1,4}},
+				{note2IdxFreqMap["A4"],{1,4}},
+				{note2IdxFreqMap["B4"],{1,4}},
+				{note2IdxFreqMap["C5"],{1,2}},
+
+				{note2IdxFreqMap["E5"],{1,4},{1,2}},
+				{note2IdxFreqMap["D#5"],{1,4}},
+				{note2IdxFreqMap["E5"],{1,4}},
+				{note2IdxFreqMap["D#5"],{1,4}},
+				{note2IdxFreqMap["E5"],{1,4}},
+				{note2IdxFreqMap["B4"],{1,4}},
+				{note2IdxFreqMap["D5"],{1,4}},
+				{note2IdxFreqMap["C5"],{1,4}},
+				{note2IdxFreqMap["A4"],{1,2}},
+
+				{note2IdxFreqMap["E4"],{1,4},{1,4}},
+				{note2IdxFreqMap["G#4"],{1,4}},
+				{note2IdxFreqMap["A4"],{1,4}},
+				{note2IdxFreqMap["B4"],{1,2}},
+
+				{note2IdxFreqMap["B4"],{1,4},{1,4}},
+				{note2IdxFreqMap["C5"],{1,4}},
+				{note2IdxFreqMap["B4"],{1,4}},
+				{note2IdxFreqMap["A4"],{1,2}},
+
+			});
+
+			track1.saveToFile("track1.notes");
+
+			CGenNotes<FP_KIND> gNotes(SAMPLE_RATE, 60, track1);
+
+			COscSine<FP_KIND> sigSine(
+				new COscFreq<FP_KIND>(
+					SAMPLE_RATE,
+					gNotes.getOpNoteFreq()
+				)
+			);
+
+			CAudioConverter<SF_KIND, FP_KIND> genAudio(
+				new COCBMul<FP_TYPE>(sigSine, new CEnvelopeADSR<FP_KIND>({100,0,0.8,100},gNotes.getOpNoteGate()))
+			);
+			audioAgregateMillis<SAMPLE_FORMAT_TYPE>(pFileOut, genAudio, 12000);
+
+			delete pFileOut;
+		}
+
 	};
 
 }

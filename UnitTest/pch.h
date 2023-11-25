@@ -13,7 +13,7 @@
 #include "../AudioGenerator/CGenConstant.h"
 #include "../AudioGenerator/CGenFiniteConstant.h"
 
-#include "../AudioGenerator/CEnvelope.h"
+#include "../AudioGenerator/CEnvelopeADSR.h"
 
 #include "../AudioGenerator/audio.h"
 #include "../AudioGenerator/function.h"
@@ -34,6 +34,7 @@
 #include "../AudioGenerator/COCUInvert.h"
 #include "../AudioGenerator/COCUCustom.h"
 #include "../AudioGenerator/COCUMul.h"
+#include "../AudioGenerator/COCUOffsetScale.h"
 
 #include "../AudioGenerator/COCBMul.h"
 
@@ -43,12 +44,12 @@ using namespace ipgdlib::processor;
 using namespace ipgdlib::audio;
 
 constexpr eSampleRateKind		SAMPLE_RATE_KIND = esrk48kHz;
-constexpr eFloatingPointKind	FLOATING_POINT_KIND = efpk64Bit;
-constexpr eSampleFormatKind		SAMPLE_FORMAT_KIND = esfkS16Bit;
+constexpr eFloatingPointKind	FP_KIND = efpk64Bit;
+constexpr eSampleFormatKind		SF_KIND = esfkS16Bit;
 
 constexpr size_t				SAMPLE_RATE = sample_rate_trait<SAMPLE_RATE_KIND>::SAMPLE_PER_SECOND;
-using							FLOATING_POINT_TYPE = TFPKind<FLOATING_POINT_KIND>;
-using							SAMPLE_FORMAT_TYPE = typename sample_format_trait<SAMPLE_FORMAT_KIND>::type;
+using							FP_TYPE = TFPKind<FP_KIND>;
+using							SAMPLE_FORMAT_TYPE = typename sample_format_trait<SF_KIND>::type;
 
 
 #endif //PCH_H

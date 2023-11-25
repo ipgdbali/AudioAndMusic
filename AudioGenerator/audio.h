@@ -12,7 +12,7 @@ namespace ipgdlib
 {
 	namespace audio
 	{
-		constexpr double freqMap[] = {
+		inline constexpr double freqMap[] = {
 			16.35,17.32,18.35,19.45,20.6,21.83,23.12,24.5,25.96,27.5,29.14,30.87,
 			32.7,34.65,36.71,38.89,41.2,43.65,46.25,49,51.91,55,58.27,61.74,
 			65.41,69.3,73.42,77.78,82.41,87.31,92.5,98,103.83,110,116.54,123.47,
@@ -24,7 +24,7 @@ namespace ipgdlib
 			4186.41,4434.92,4698.63,4978.03,5274.04,5587.65,5919.91,6271.93,6644.88,7040,7458.62,7902.13,
 		};
 
-		std::map<std::string, uint8_t> noteSharp2IdxFreqMap({
+		inline std::map<std::string, uint8_t> noteSharp2IdxFreqMap({
 			{"C0", 0},{"C#0", 1},{"D0", 2},{"D#0", 3},{"E0",  4},{"F0",  5},{"F#0",  6},{"G0",  7},{"G#0",  8},{"A0",  9},{"A#0", 10},{"B0", 11},
 			{"C1",12},{"C#1",13},{"D1",14},{"D#1",15},{"E1", 16},{"F1", 17},{"F#1", 18},{"G1", 19},{"G#1", 20},{"A1", 21},{"A#1", 22},{"B1", 23},
 			{"C2",24},{"C#2",25},{"D2",26},{"D#2",27},{"E2", 28},{"F2", 29},{"F#2", 30},{"G2", 31},{"G#2", 32},{"A2", 33},{"A#2", 34},{"B2", 35},
@@ -36,7 +36,7 @@ namespace ipgdlib
 			{"C8",96},{"C#8",97},{"D8",98},{"D#8",99},{"E8",100},{"F8",101},{"F#8",102},{"G8",103},{"G#8",104},{"A8",105},{"A#8",106},{"B8",107}
 		});
 
-		std::map<std::string, uint8_t> noteFlat2IdxFreqMap({
+		inline std::map<std::string, uint8_t> noteFlat2IdxFreqMap({
 			{"C0", 0},{"Db0", 1},{"D0", 2},{"Eb0", 3},{"E0",  4},{"F0",  5},{"Gb0",  6},{"G0",  7},{"Ab0",  8},{"A0",  9},{"Bb0", 10},{"B0", 11},
 			{"C1",12},{"Db1",13},{"D1",14},{"Eb1",15},{"E1", 16},{"F1", 17},{"Gb1", 18},{"G1", 19},{"Ab1", 20},{"A1", 21},{"Bb1", 22},{"B1", 23},
 			{"C2",24},{"Db2",25},{"D2",26},{"Eb2",27},{"E2", 28},{"F2", 29},{"Gb2", 30},{"G2", 31},{"Ab2", 32},{"A2", 33},{"Bb2", 34},{"B2", 35},
@@ -48,7 +48,20 @@ namespace ipgdlib
 			{"C8",96},{"Db8",97},{"D8",98},{"Eb8",99},{"E8",100},{"F8",101},{"Gb8",102},{"G8",103},{"Ab8",104},{"A8",105},{"Bb8",106},{"B8",107}
 		});
 
-		std::map<uint8_t,const char*> idxFreq2SharpNoteMap({
+		inline std::map<std::string, uint8_t> note2IdxFreqMap({
+			{"C0", 0},{"C#0", 1},{"Db0", 1},{"D0", 2},{"D#0",  3},{"Eb0", 3},{"E0",  4},{"F0",  5},{"F#0",  6},{"Gb0",  6},{"G0",  7},{"G#0",  8},{"Ab0",  8},{"A0",  9},{"A#0", 10},{"Bb0", 10},{"B0", 11},
+			{"C1",12},{"C#1",13},{"Db1",13},{"D1",14},{"D#1", 15},{"Eb1",15},{"E1", 16},{"F1", 17},{"F#1", 18},{"Gb1", 18},{"G1", 19},{"G#1", 20},{"Ab1", 20},{"A1", 21},{"A#1", 22},{"Bb1", 22},{"B1", 23},
+			{"C2",24},{"C#2",25},{"Db2",25},{"D2",26},{"D#2", 27},{"Eb2",27},{"E2", 28},{"F2", 29},{"F#2", 30},{"Gb2", 30},{"G2", 31},{"G#2", 32},{"Ab2", 32},{"A2", 33},{"A#2", 34},{"Bb2", 34},{"B2", 35},
+			{"C3",36},{"C#3",37},{"Db3",37},{"D3",38},{"D#3", 39},{"Eb3",39},{"E3", 40},{"F3", 41},{"F#3", 42},{"Gb3", 42},{"G3", 43},{"G#3", 44},{"Ab3", 44},{"A3", 45},{"A#3", 46},{"Bb3", 46},{"B3", 47},
+			{"C4",48},{"C#4",49},{"Db4",49},{"D4",50},{"D#4", 51},{"Eb4",51},{"E4", 52},{"F4", 53},{"F#4", 54},{"Gb4", 54},{"G4", 55},{"G#4", 56},{"Ab4", 56},{"A4", 57},{"A#4", 58},{"Bb4", 58},{"B4", 59},
+			{"C5",60},{"C#5",61},{"Db5",61},{"D5",62},{"D#5", 63},{"Eb5",63},{"E5", 64},{"F5", 65},{"F#5", 66},{"Gb5", 66},{"G5", 67},{"G#5", 68},{"Ab5", 68},{"A5", 69},{"A#5", 70},{"Bb5", 70},{"B5", 71},
+			{"C6",72},{"C#6",73},{"Db6",73},{"D6",74},{"D#6", 75},{"Eb6",75},{"E6", 76},{"F6", 77},{"F#6", 78},{"Gb6", 78},{"G6", 79},{"G#6", 80},{"Ab6", 80},{"A6", 81},{"A#6", 82},{"Bb6", 82},{"B6", 83},
+			{"C7",84},{"C#7",85},{"Db7",85},{"D7",86},{"D#7", 87},{"Eb7",87},{"E7", 88},{"F7", 89},{"F#7", 90},{"Gb7", 90},{"G7", 91},{"G#7", 92},{"Ab7", 92},{"A7", 93},{"A#7", 94},{"Bb7", 94},{"B7", 95},
+			{"C8",96},{"C#8",97},{"Db8",97},{"D8",98},{"D#8", 99},{"Eb8",99},{"E8",100},{"F8",101},{"F#8",102},{"Gb8",102},{"G8",103},{"G#8",104},{"Ab8",104},{"A8",105},{"A#8",106},{"Bb8",106},{"B8",107}
+		});
+
+
+		inline std::map<uint8_t,const char*> idxFreq2SharpNoteMap({
 			{ 0,"C0"},{ 1,"C#0"},{ 2,"D0"},{ 3,"D#0"},{  4,"E0"},{  5,"F0"},{  6,"F#0"},{  7,"G0"},{  8,"G#0"},{  9,"A0"},{ 10,"A#0"},{ 11,"B0"},
 			{12,"C1"},{13,"C#1"},{14,"D1"},{15,"D#1"},{ 16,"E1"},{ 17,"F1"},{ 18,"F#1"},{ 19,"G1"},{ 20,"G#1"},{ 21,"A1"},{ 22,"A#1"},{ 23,"B1"},
 			{24,"C2"},{25,"C#2"},{26,"D2"},{27,"D#2"},{ 28,"E2"},{ 29,"F2"},{ 30,"F#2"},{ 31,"G2"},{ 32,"G#2"},{ 33,"A2"},{ 34,"A#2"},{ 35,"B2"},
@@ -60,7 +73,7 @@ namespace ipgdlib
 			{96,"C8"},{97,"C#8"},{98,"D8"},{99,"D#8"},{100,"E8"},{101,"F8"},{102,"F#8"},{103,"G8"},{104,"G#8"},{105,"A8"},{106,"A#8"},{107,"B8"}
 		});
 
-		std::map<uint8_t, const char*> idxFreq2FlatNoteMap({
+		inline std::map<uint8_t, const char*> idxFreq2FlatNoteMap({
 			{ 0,"C0"},{ 1,"Db0"},{ 2,"D0"},{ 3,"Eb0"},{  4,"E0"},{  5,"F0"},{  6,"Gb0"},{  7,"G0"},{  8,"Ab0"},{  9,"A0"},{ 10,"Bb0"},{ 11,"B0"},
 			{12,"C1"},{13,"Db1"},{14,"D1"},{15,"Eb1"},{ 16,"E1"},{ 17,"F1"},{ 18,"Gb1"},{ 19,"G1"},{ 20,"Ab1"},{ 21,"A1"},{ 22,"Bb1"},{ 23,"B1"},
 			{24,"C2"},{25,"Db2"},{26,"D2"},{27,"Eb2"},{ 28,"E2"},{ 29,"F2"},{ 30,"Gb2"},{ 31,"G2"},{ 32,"Ab2"},{ 33,"A2"},{ 34,"Bb2"},{ 35,"B2"},
@@ -402,7 +415,7 @@ namespace ipgdlib
 
 		};
 
-		std::ostream& operator << (std::ostream& os, beat_t beat)
+		inline std::ostream& operator << (std::ostream& os, beat_t beat)
 		{
 			if (beat.mul == 0)
 			{
@@ -416,7 +429,7 @@ namespace ipgdlib
 			return os;
 		}
 
-		std::istream& operator >> (std::istream& is, beat_t & beat)
+		inline std::istream& operator >> (std::istream& is, beat_t & beat)
 		{
 			int val;
 
@@ -439,18 +452,28 @@ namespace ipgdlib
 			return is;
 		}
 
-		struct CNotes
+		struct CNoteLane
 		{
 
 			struct note_t
 			{
 				note_t() :
-					note(0),length(),prev()
+					note(0),length(),prev(),duration(0.98)
 				{
 				}
 
-				note_t(uint8_t _note, beat_t _length, beat_t _prev = {}) :
-					note(_note), length(_length), prev(_prev)
+				note_t(uint8_t _note, beat_t _noteBeat) :
+					note_t(_note, _noteBeat, 0.98, {})
+				{
+				}
+
+				note_t(uint8_t _note, beat_t _noteBeat,beat_t _prev) :
+					note_t(_note, _noteBeat, 0.98, _prev)
+				{
+				}
+
+				note_t(uint8_t _note, beat_t _noteBeat,float _duration,beat_t _prev) :
+					note(_note), length(_noteBeat), duration(_duration),prev(_prev)
 				{
 				}
 
@@ -469,20 +492,21 @@ namespace ipgdlib
 				}
 
 				beat_t length;
+				float duration;
 				beat_t prev;
 			};
 
-			CNotes() :
+			CNoteLane() :
 				m_Notes()
 			{
 			}
 
-			CNotes(const char * filename)
+			CNoteLane(const char * filename)
 			{
 				this->loadFromFile(filename);
 			}
 
-			CNotes(std::vector<note_t> notes) :
+			CNoteLane(std::vector<note_t> notes) :
 				m_Notes(std::move(notes))
 			{
 			}

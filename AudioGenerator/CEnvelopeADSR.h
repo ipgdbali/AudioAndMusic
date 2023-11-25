@@ -25,12 +25,12 @@ namespace ipgdlib
 		/// Output : Amp Level intensity from 0 to.1;
 		/// </summary>
 		template <eFloatingPointKind fpKind>
-		struct CEnvelope :
+		struct CEnvelopeADSR :
 			public CAbsOperator<TFPKind<fpKind>>
 		{
 			using float_type = TFPKind<fpKind>;
 			
-			CEnvelope(
+			CEnvelopeADSR(
 				ADSR<size_t,float_type> adsr,
 				std::array<std::function<float_type(float_type)>, 3> funcs, // attack,decay,release
 				pointer_deleter<IOperatorT<eGateKind>> opGate
@@ -42,10 +42,10 @@ namespace ipgdlib
 				this->reset();
 			}
 
-			CEnvelope(
+			CEnvelopeADSR(
 				ADSR<size_t, float_type> adsr,
 				pointer_deleter<IOperatorT<eGateKind>> opGate
-			) : CEnvelope<fpKind>(
+			) : CEnvelopeADSR<fpKind>(
 				std::move(adsr),
 				{
 					[](float_type x) { return x; },
@@ -61,7 +61,7 @@ namespace ipgdlib
 			{
 				CAbsOperator<TFPKind<fpKind>>::reset();
 				this->m_Ticks = 0;
-				this->m_CurrState = eEnvelopeState::OFF;
+				this->m_CurrState = eEnvelopeState::SILENT;
 			}
 
 			float_type get() noexcept final
@@ -72,34 +72,13 @@ namespace ipgdlib
 				
 				switch (this->m_CurrState)
 				{
-					case eEnvelopeState::OFF :
+					case eEnvelopeState::SILENT :
 					{
 						// Gate Input
 						switch (gk)
 						{
 							case egkOff: break;
-							case egkOn: {
-
-								if (this->m_ADSR.tmAttack > 0)
-								{
-									this->m_CurrState = eEnvelopeState::ATTACK;
-									
-									//start from 1 to not delay 1 sample
-									this->m_Ticks = 1;
-								}
-								else
-									if (this->m_ADSR.tmDecay > 0)
-									{
-										this->m_CurrState = eEnvelopeState::DECAY;
-										this->m_Ticks = 0;
-									}
-									else
-									{
-										this->m_CurrState = eEnvelopeState::SUSTAIN;
-										this->m_Ticks = 0;
-									}
-							}break;
-							case egkChangeFreq: break;
+							case egkOn: this->enterAttack();break;
 						}
 					}break;
 
@@ -108,28 +87,17 @@ namespace ipgdlib
 							switch (gk)
 							{
 								case egkOn:
-								{
-
-									if (this->m_Ticks == this->m_ADSR.tmAttack + 1) // because start from 1
-									{
-										this->m_Ticks = 0;
-										this->m_CurrState = eEnvelopeState::DECAY;
-									}
-
-								}break;
+									if (this->m_Ticks == this->m_ADSR.tmAttack)
+										this->enterDecay();
+								break;
 
 								case egkOff:
-								{
-									// change to release
-									m_ReleaseStartLevel = this->m_Ticks / ((float_type)this->m_ADSR.tmAttack + 1);
-									this->m_Ticks = 0;
-									this->m_CurrState = eEnvelopeState::RELEASE;
-								}break;
+									this->enterRelease(this->m_Ticks / ((float_type)this->m_ADSR.tmAttack + 1));
+								break;
 
 								case egkChangeFreq:
-								{
-									this->m_Ticks = 0;
-								}break;
+									this->enterAttack();
+								break;
 							}
 
 						}break;
@@ -138,25 +106,20 @@ namespace ipgdlib
 					{
 						switch (gk)
 						{
-							case egkOff: {
-								m_ReleaseStartLevel = 1 - (1 - this->m_ADSR.lvlSustain) * (this->m_Ticks / this->m_ADSR.tmDecay);
-								this->m_Ticks = 0;
-								this->m_CurrState = eEnvelopeState::RELEASE;
-							}break;
+							case egkOff: 
+								this->enterRelease(1 - (1 - this->m_ADSR.lvlSustain) * (this->m_Ticks / this->m_ADSR.tmDecay)); 
+							break;
 
-							case egkOn: {
+							case egkOn:
 								if (this->m_Ticks == this->m_ADSR.tmDecay)
 								{
 									this->m_Ticks = 0;
 									this->m_CurrState = eEnvelopeState::SUSTAIN;
 								}
-							}break;
-
-							case egkChangeFreq: 
-							{
-								this->m_Ticks = 0;
-								this->m_CurrState = eEnvelopeState::ATTACK;
-							}break;
+							break;
+							case egkChangeFreq:
+								this->enterAttack();
+								break;
 						}
 					}break;
 
@@ -164,19 +127,17 @@ namespace ipgdlib
 					{
 						switch (gk)
 						{
-							case egkOff: {
-								this->m_Ticks = 0;
-								this->m_CurrState = eEnvelopeState::RELEASE;
-								this->m_ReleaseStartLevel = this->m_ADSR.lvlSustain;
-							}break;
+							case egkOff:
+								this->enterRelease(this->m_ADSR.lvlSustain);
+							break;
 
-							case egkOn: {
-							}break;
+							case egkOn: 
+							break;
 
-							case egkChangeFreq: {
-								this->m_Ticks = 1;
-								this->m_CurrState = eEnvelopeState::ATTACK;
-							}break;
+							case egkChangeFreq:
+								this->enterAttack();
+							break;
+
 						}
 					}break;
 
@@ -188,17 +149,18 @@ namespace ipgdlib
 								if (this->m_Ticks == this->m_ADSR.tmRelease)
 								{
 									this->m_Ticks = 0;
-									this->m_CurrState = eEnvelopeState::OFF;
+									this->m_CurrState = eEnvelopeState::SILENT;
 								}
 								break;
 
-							case egkOn: {
-								this->m_Ticks = 0;
-								this->m_CurrState = eEnvelopeState::ATTACK;
-							}	break;
+							case egkOn: 
+								this->enterAttack();
+								break;
 
-							case egkChangeFreq: 
-								break; // undefined
+							case egkChangeFreq:
+								this->enterAttack();
+								break;
+
 						}
 					}break;
 				}
@@ -206,12 +168,14 @@ namespace ipgdlib
 				// process
 				switch (this->m_CurrState)
 				{
-					case eEnvelopeState::OFF:	
+					case eEnvelopeState::SILENT:	
 						ret = 0.0;
 						break;
 
 					case eEnvelopeState::ATTACK:
-						ret = this->m_Funcs[0]((float_type)this->m_Ticks / (this->m_ADSR.tmAttack + 1.0));
+						ret = this->m_Funcs[0](((float_type)this->m_Ticks + 1) / (this->m_ADSR.tmAttack + 1.0));
+						if (this->m_ADSR.tmDecay == 0)
+							ret = ret * this->m_ADSR.lvlSustain;
 						break;
 
 					case eEnvelopeState::DECAY:		
@@ -250,7 +214,40 @@ namespace ipgdlib
 			}
 
 		protected:
-			enum class eEnvelopeState : uint8_t { OFF, ATTACK, DECAY, SUSTAIN, RELEASE };
+			enum class eEnvelopeState : uint8_t { SILENT, ATTACK, DECAY, SUSTAIN, RELEASE };
+
+			void enterAttack()
+			{
+				if (this->m_ADSR.tmAttack == 0)
+					this->enterDecay();
+				else
+				{
+					this->m_Ticks = 0;
+					this->m_CurrState = eEnvelopeState::ATTACK;
+				}
+			}
+
+			void enterDecay()
+			{
+				if (this->m_ADSR.tmDecay == 0)
+				{
+					this->m_Ticks = 0;
+					this->m_CurrState = eEnvelopeState::SUSTAIN;
+				}
+				else
+				{
+					this->m_Ticks = 0;
+					this->m_CurrState = eEnvelopeState::DECAY;
+				}
+			}
+
+			void enterRelease(float_type startLevel)
+			{
+				m_ReleaseStartLevel = startLevel;
+				this->m_Ticks = 0;
+				this->m_CurrState = eEnvelopeState::RELEASE;
+			}
+
 
 		private:
 			ADSR<size_t,float_type>									m_ADSR;

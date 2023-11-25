@@ -126,9 +126,6 @@
     <ClInclude Include="IOperatorProducer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CEnvelope.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="COscNoise.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -151,6 +148,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="function.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="COCUOffsetScale.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CEnvelopeADSR.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -53,7 +53,10 @@ namespace ipgdlib
 				for (size_t li = 0; li < writtenSample; li++)
 				{
 					for (size_t lj = 0; lj < audioOut->getChannelCount(); lj++)
-						pBuffer[li * audioOut->getChannelCount() + lj] = signal->get();
+					{
+						T tmp = signal->get();
+						pBuffer[li * audioOut->getChannelCount() + lj] = tmp;
+					}
 				}
 
 				audioOut->unlockBuffer(&pBuffer, writtenSample);

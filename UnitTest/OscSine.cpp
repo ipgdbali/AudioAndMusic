@@ -198,9 +198,9 @@ namespace Oscillator
 			delete pFileOut;
 		}
 
-		TEST_METHOD(Notes)
+		TEST_METHOD(NotesSingleTrack)
 		{
-			auto pFileOut = new CWaveFileWriter<SF_KIND>("oscsine-notes.wav", esrk48kHz, 1);
+			auto pFileOut = new CWaveFileWriter<SF_KIND>("oscsine-notes-single-track.wav", esrk48kHz, 1);
 			
 			CNoteLane track1({
 				{note2IdxFreqMap["E5"],{1,4}},
@@ -264,6 +264,55 @@ namespace Oscillator
 			delete pFileOut;
 		}
 
+		TEST_METHOD(NotesMultiTrack)
+		{
+			auto pFileOut = new CWaveFileWriter<SF_KIND>("oscsine-notes-multi-track.wav", esrk48kHz, 1);
+
+			CNoteLane track1("test.track1");
+			CNoteLane track2("test.track2");
+
+			CGenNotes<FP_KIND> gTrack1(SAMPLE_RATE, 60, track1);
+			auto pInstr1 =
+				new COCBMul<FP_TYPE>(
+					new COscPWM<FP_KIND>(
+						new COscFreq<FP_KIND>(
+							SAMPLE_RATE,
+							gTrack1.getOpNoteFreq()
+						),
+						new CGenConstant<FP_TYPE>(0.5)
+					),
+					new CEnvelopeADSR<FP_KIND>({ 100,0,0.8,100 }, gTrack1.getOpNoteGate())
+				);
+
+			CGenNotes<FP_KIND> gTrack2(SAMPLE_RATE, 60, track2);
+			auto pInstr2 =
+				new COCBMul<FP_TYPE>(
+					new COscSine<FP_KIND>(
+						new COscFreq<FP_KIND>(
+							SAMPLE_RATE,
+							gTrack2.getOpNoteFreq()
+						)
+					),	
+					new CEnvelopeADSR<FP_KIND>({ 100,0,0.8,100 }, gTrack2.getOpNoteGate())
+				);
+
+			CAudioConverter<SF_KIND, FP_KIND> genAudio(
+				new COCMAdd<FP_TYPE>({
+					new COCUMul<FP_TYPE>(
+						0.5,
+						pInstr1
+					),
+					new COCUMul<FP_TYPE>(
+						0.5,
+						pInstr2
+					)	
+				})
+			);
+
+			audioAgregateMillis<SAMPLE_FORMAT_TYPE>(pFileOut, genAudio, 4000);
+
+			delete pFileOut;
+		}
 	};
 
 }

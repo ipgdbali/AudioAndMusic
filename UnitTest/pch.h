@@ -37,6 +37,9 @@
 #include "../AudioGenerator/COCUOffsetScale.h"
 
 #include "../AudioGenerator/COCBMul.h"
+#include "../AudioGenerator/COCBAdd.h"
+
+#include "../AudioGenerator/COCMAdd.h"
 
 
 using namespace ipgdlib;

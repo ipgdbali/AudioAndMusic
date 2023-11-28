@@ -23,7 +23,7 @@ namespace ipgdlib
 			}
 
 			COCMSerializer(std::vector<param_type> sources) :
-				CAbsOperatorCommonUnary<TIO>(sources),
+				CAbsOperatorCommon<TIO>(sources),
 				m_CurrIndex(sources.size()-1)
 			{
 			}

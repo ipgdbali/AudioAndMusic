@@ -140,6 +140,7 @@
     <ClInclude Include="CGenFiniteConstant.h" />
     <ClInclude Include="CGenNotes.h" />
     <ClInclude Include="COCBPower.h" />
+    <ClInclude Include="COCMAdd.h" />
     <ClInclude Include="COCUAdd.h" />
     <ClInclude Include="COCUCosine.h" />
     <ClInclude Include="COCUInvert.h" />

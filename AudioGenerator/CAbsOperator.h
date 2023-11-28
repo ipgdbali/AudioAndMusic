@@ -82,7 +82,7 @@ namespace ipgdlib
                 });
             }
 
-        private:
+        protected:
             std::vector<pointer_deleter<IOperator>> m_vOperands;
         };
 
